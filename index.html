@@ -1,8 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-  <title>你的首页</title>
+<title> New Document </title>
+<meta charset="utf-8">
+
+<style type="text/css">
+*{margin:0px;padding:0px;}
+ul{list-style:none;}
+ul li{background:#ccc;padding:5px;margin-bottom:10px;}
+</style>
+
 </head>
+
 <body>
-  你好
+
+<ul id="list">
+<li><img src="01.jpg"></li>
+<li><img src="01.jpg"></li>
+<li><img src="01.jpg"></li>
+<li><img src="01.jpg"></li>
+<li><img src="01.jpg"></li>
+<li><img src="01.jpg"></li>
+<li><img src="01.jpg"></li>
+<li><img src="01.jpg"></li>
+</ul>
+<button id="qiehuan" style="width:100px;height:20px;line-height;20px;background:#f00;border:none;color:#fff;position:fixed;left:50%;margin-left:-50px;top:0px;">切换布局</button>
+<div style="position:fixed;width:100px;height:20px;background:#f00;left:50%;margin-left:-50px;bottom:0px;z-index:2;"></div>
+
+<script src="jquery-1.11.1.min.js"></script>
+<script>
+//中心点
+var center;
+function resetCount()
+{
+	center = {
+		x:$(window).width()/2 - 40 + $(window).scrollLeft(),
+		y:$(window).height() + $(window).scrollTop()
+	};
+}
+$(window).scroll(resetCount).resize(resetCount).trigger('resize');
+
+//事件绑定
+var animateFlage = false;
+$('#list').find('li').click(function(){
+	if(animateFlage)return;
+	animateFlage = true;
+	$img = $(this).find('img');
+	var $clone = $img.clone()
+	.appendTo($('body'))
+	.css({
+		'position':'absolute',
+		'left':$img.offset().left+'px',
+		'top':$img.offset().top+'px'
+	});
+	animateGo($clone);
+});
+
+//商品动画
+function animateGo($clone)
+{
+	var speedY = -45;
+	var speedYn = 5;
+	var speedX = (center.x - $clone.offset().left) / getStep($clone.offset().top, speedY, speedYn, center.y);
+	var fn = function(){
+		speedY += speedYn;
+		$clone.css({
+			top:$clone.offset().top + speedY+'px',
+			left:$clone.offset().left + speedX+'px'
+		});
+		if($clone.offset().top<center.y)
+		{
+			setTimeout(fn,30);
+		}
+		else
+		{
+			$clone.remove();
+			animateFlage = false;
+		}
+	};
+	fn();
+}
+
+//获取步数
+function getStep(chushi,sudu,zengliang,mubiao)
+{
+	var step = 0;
+	while(true)
+	{
+		if(chushi > mubiao)break;
+		sudu += zengliang;
+		chushi +=  sudu;
+		step++;
+	}
+	return step;
+}
+
+//切换布局
+var flage = false;
+$('#qiehuan').click(function(){
+	if(flage)
+	{
+		$('#list').css('text-align','left');
+	}
+	else
+	{
+		$('#list').css('text-align','right');
+	}
+	flage = !flage;
+});
+</script>
 </body>
 </html>
