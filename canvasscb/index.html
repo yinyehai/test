@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>HTML5画布(Canvas)速查简表</title>
+<meta name="viewport" content="width=device-width">
+<link href="normalize.css" rel="stylesheet" media="screen">
+<link href="main.css" rel="stylesheet">
+</head>
+  <body>
+    <div id="header" class="clearfix">
+      <a id="logo" href="http://yinyehai.github.io/">yinyehai</a>
+
+      <div id="headerAd">
+        
+      </div>
+
+    </div>
+    <div class="content">
+      
+      <h1>HTML5画布(Canvas)速查简表</h1>
+  
+  <ul id="items">
+  <!---------------------- ITEM ---------------------->
+  <li class="item">
+    <h2>HTML5画布(Canvas)元素</h2>
+ 
+<h3>>HTML5画布(Canvas)元素</h3>
+<pre class="prettyprint">
+&lt;canvas id="myCanvas" width="500" height="300"&gt;
+</pre>
+
+<h3>浏览器不支持画布(canvas)时的备案</h3>
+<pre class="prettyprint">
+&lt;canvas id="myCanvas" width="500" height="300"&gt;
+  your browser doesn't support canvas!
+&lt;/canvas&gt;
+</pre>
+   
+<h3>2d context</h3>
+<pre class="prettyprint">
+var context = canvas.getContext('2d');
+</pre>
+
+<h3>Webgl context (3d)</h3>
+<pre class="prettyprint">
+var context = canvas.getContext('webgl');
+</pre>
+
+  </li>
+  
+  <!---------------------- SHAPES ---------------------->
+  <li class="item">
+    <h2>图形</h2>
+    
+<h3>绘制方形</h3>
+<pre class="prettyprint">
+context.rect(x, y, width, height);
+context.fill();
+context.stroke();
+</pre>
+
+<h3>填充区域</h3>
+<pre class="prettyprint">
+context.fillRect(x, y, width, height);
+</pre>
+
+<h3>绘制方形的边框</h3>
+<pre class="prettyprint">
+context.strokeRect(x, y, width, height);
+</pre>
+
+<h3>绘制圆形</h3>
+<pre class="prettyprint">
+context.arc(x, y, radius, 0, Math.PI * 2);
+context.fill();
+context.stroke();
+</pre>
+
+  </li>
+  
+  <!---------------------- STYLES ---------------------->
+  <li class="item">
+    <h2>风格</h2>
+
+<h3>填充</h3>
+<pre class="prettyprint">
+context.fillStyle = 'red';
+context.fill();
+</pre>
+    
+<h3>勾勒</h3>
+<pre class="prettyprint">
+context.strokeStyle = 'red';
+context.stroke();
+</pre>
+
+<h3>线性渐变</h3>
+<pre class="prettyprint">
+var grd = context.createLinearGradient(x1, y1, x2, y2);
+grd.addColorStop(0, 'red');   
+grd.addColorStop(1, 'blue');
+context.fillStyle = grd;
+context.fill();
+</pre>
+
+<h3>径向渐变</h3>
+<pre class="prettyprint">
+var grd = context.createRadialGradient(x1, y1, radius1, x2, y2, radius2);
+grd.addColorStop(0, 'red');
+grd.addColorStop(1, 'blue');
+context.fillStyle = grd;
+context.fill();
+</pre>
+
+
+<h3>图案</h3>
+<pre class="prettyprint">
+var imageObj = new Image();
+imageObj.onload = function() {
+  var pattern = context.createPattern(imageObj, 'repeat');
+  context.fillStyle = pattern;
+  context.fill();
+};
+imageObj.src = 'path/to/my/image.jpg';
+</pre>
+
+<h3>交点</h3>
+<pre class="prettyprint">
+context.lineJoin = 'miter|round|bevel';
+</pre>
+
+<h3>线头</h3>
+<pre class="prettyprint">
+context.lineCap = 'butt|round|square';
+</pre>
+
+<h3>阴影</h3>
+<pre class="prettyprint">
+context.shadowColor = 'black';
+context.shadowBlur = 20;
+context.shadowOffsetX = 10;
+context.shadowOffsetY = 10;
+</pre>
+
+<h3>Alpha (透明)</h3>
+<pre class="prettyprint">
+context.globalAlpha = 0.5; // between 0 and 1
+</pre>
+      
+      
+  <!---------------------- COLOR FORMATS ---------------------->
+  <li class="item">
+    <h2>颜色格式</h2>
+    
+<h3>字符串</h3>
+<pre class="prettyprint">
+context.fillStyle = 'red';
+</pre>
+
+<h3>16进制</h3>
+<pre class="prettyprint">
+context.fillStyle = '#ff0000';
+</pre>
+
+<h3>16进制简写</h3>
+<pre class="prettyprint">
+context.fillStyle = '#f00';
+</pre>
+
+<h3>RGB</h3>
+<pre class="prettyprint">
+context.fillStyle = 'rgb(255,0,0)';
+</pre>
+
+<h3>RGBA</h3>
+<pre class="prettyprint">
+context.fillStyle = 'rgba(255,0,0,1)';
+</pre>
+
+  </li>
+
+  <!---------------------- PATHS ---------------------->
+  <li class="item">
+    <h2>路径</h2>
+  
+<h3>开始路径</h3>
+<pre class="prettyprint">
+context.beginPath();
+</pre>
+ 
+<h3>画线</h3>
+<pre class="prettyprint">
+context.lineTo(x, y);
+</pre>
+
+<h3>弧形</h3>
+<pre class="prettyprint">
+context.arc(x, y, radius, startAngle, endAngle, counterClockwise);
+</pre>
+
+<h3>二次曲线</h3>
+<pre class="prettyprint">
+context.quadraticCurveTo(cx, cy, x, y);
+</pre>
+ 
+<h3>二次曲线</h3>
+<pre class="prettyprint">
+context.bezierCurveTo(cx1, cy1, cx2, cy2, x, y);
+</pre>
+
+<h3>关闭路径</h3>
+<pre class="prettyprint">
+context.closePath();
+</pre>
+  </li>
+  
+  <!---------------------- IMAGES ---------------------->
+  <li class="item">
+    <h2>图片</h2>
+    
+<h3>画图</h3>
+<pre class="prettyprint">
+var imageObj = new Image();
+imageObj.onload = function() {
+  context.drawImage(imageObj, x, y);
+};
+imageObj.src = 'path/to/my/image.jpg';
+</pre>
+
+<h3>指定尺寸画图</h3>
+<pre class="prettyprint">
+var imageObj = new Image();
+imageObj.onload = function() {
+  context.drawImage(imageObj, x, y, width, height);
+};
+imageObj.src = 'path/to/my/image.jpg';
+</pre>
+
+<h3>裁剪图片</h3>
+<pre class="prettyprint">
+var imageObj = new Image();
+imageObj.onload = function() {
+  context.drawImage(imageObj, sx, sy, sw, sh, dx, dy, dw, dh);
+};
+imageObj.src = 'path/to/my/image.jpg';
+</pre>
+
+  <!---------------------- TEXT ---------------------->
+  <li class="item">
+    <h2>文本</h2>
+
+<h3>写文字</h3>
+<pre class="prettyprint">
+context.font = '40px Arial';
+context.fillStyle = 'red';
+context.fillText('Hello World!', x, y);
+</pre>
+
+<h3>写镂空文字</h3>
+<pre class="prettyprint">
+context.font = '40pt Arial';
+context.strokeStyle = 'red';
+context.strokeText('Hello World!', x, y);
+</pre>
+
+<h3>粗体</h3>
+<pre class="prettyprint">
+context.font = 'bold 40px Arial';
+</pre>
+
+<h3>斜体</h3>
+<pre class="prettyprint">
+context.font = 'italic 40px Arial';
+</pre>
+
+<h3>对齐方式</h3>
+<pre class="prettyprint">
+context.textAlign = 'start|end|left|center|right';
+</pre>
+
+<h3>文字基线</h3>
+<pre class="prettyprint">
+context.textBaseline = 'top|hanging|middle|alphabetic|ideographic
+|bottom';
+</pre>
+
+<h3>获取文本宽度</h3>
+<pre class="prettyprint">
+var width = context.measureText('Hello world').width;
+</pre>
+
+
+  <!---------------------- TRANSFORMS ---------------------->
+  <li class="item">
+    <h2>动画</h2>
+
+<h3>移动</h3>
+<pre class="prettyprint">
+context.translate(x, y);
+</pre>
+
+<h3>扩大缩小</h3>
+<pre class="prettyprint">
+context.scale(x, y);
+</pre>
+
+<h3>旋转</h3>
+<pre class="prettyprint">
+context.rotate(radians);
+</pre>
+
+<h3>水平翻转</h3>
+<pre class="prettyprint">
+context.scale(-1, 1);
+</pre>
+
+<h3>上下翻转</h3>
+<pre class="prettyprint">
+context.scale(1, -1);
+</pre>
+
+<h3>自定义变换</h3>
+<pre class="prettyprint">
+context.transform(a, b, c, d ,e, f);
+</pre>
+
+<h3>设置变换</h3>
+<pre class="prettyprint">
+context.setTransform(a, b, c, d ,e, f);
+</pre>
+
+<h3>切割</h3>
+<pre class="prettyprint">
+context.transform(1, sy, sx, 1, 0, 0);
+</pre>
+
+<h3>重置</h3>
+<pre class="prettyprint">
+context.setTransform(1, 0, 0, 1, 0, 0);
+</pre>
+  </li>
+  
+  <!---------------------- STATE STACK ---------------------->
+  <li class="item">
+    <h2>状态存储</h2>
+
+<h3>存储</h3>
+<pre class="prettyprint">
+context.save();
+</pre>
+
+<h3>恢复</h3>
+<pre class="prettyprint">
+context.restore();
+</pre>
+
+  </li>    
+ 
+ 
+   <!---------------------- CLIPPING ---------------------->
+  <li class="item">
+    <h2>裁剪</h2>
+
+<h3>裁剪</h3>
+<pre class="prettyprint">
+// draw path here
+context.clip();
+</pre>
+
+  </li> 
+  
+  <!---------------------- IMAGE DATA ---------------------->
+  <li class="item">
+    <h2>图像数据</h2>
+
+<h3>获取图像数据</h3>
+<pre class="prettyprint">
+var imageData = context.getImageData(x, y, width, height);
+var data = imageData.data;
+</pre>
+
+<h3>遍历像素点</h3>
+<pre class="prettyprint">
+var imageData = context.getImageData(x, y, width, height);
+var data = imageData.data;
+var len = data.length;
+var i, red, green, blue, alpha;
+
+for(i = 0; i &lt; len; i += 4) {
+  red = data[i];
+  green = data[i + 1];
+  blue = data[i + 2];
+  alpha = data[i + 3];
+}
+</pre>
+
+
+<h3>沿坐标遍历像素点</h3>
+<pre class="prettyprint">
+var imageData = context.getImageData(x, y, width, height);
+var data = imageData.data;
+var x, y, red, green, blue, alpha;
+
+for(y = 0; y &lt; imageHeight; y++) {
+  for(x = 0; x &lt; imageWidth; x++) {
+    red = data[((imageWidth * y) + x) * 4];
+    green = data[((imageWidth * y) + x) * 4 + 1];
+    blue = data[((imageWidth * y) + x) * 4 + 2];
+    alpha = data[((imageWidth * y) + x) * 4 + 3];
+  }
+}
+</pre>
+
+<h3>设置图像数据</h3>
+<pre class="prettyprint">
+context.putImageData(imageData, x, y);
+</pre>
+
+  </li> 
+  
+    <!---------------------- DATA URLS ---------------------->
+  <li class="item">
+    <h2>Data URLs</h2>
+
+<h3>获取Data URL</h3>
+<pre class="prettyprint">
+var dataURL = canvas.toDataURL();
+</pre>
+
+<h3>使用Data URL生成图像</h3>
+<pre class="prettyprint">
+var imageObj = new Image();
+imageObj.onload = function() {
+  context.drawImage(imageObj, 0, 0);
+};
+
+imageObj.src = dataURL;
+</pre>
+
+  </li> 
+  
+   <!---------------------- COMPOSITES ---------------------->
+  <li class="item">
+    <h2>合成</h2>
+
+<h3>合成操作</h3>
+<pre class="prettyprint">
+context.globalCompositeOperation = 'source-atop|source-in|source-out|source-over|destination-atop|destination-in|destination-out|destination-over|lighter|xor|copy';
+</pre>
+
+    <img width="400" src="html5-canvas-composite-operations.png" alt="HTML5 Canvas Composite Operations">
+
+  </li> 
+  
+       
+  </li>
+  </li>
+</ul>
+<script src="masonry.pkgd.min.js"></script>
+<script src="main.js"></script>
+</div>
+<div>
+</div>
+</body>
+</html>
