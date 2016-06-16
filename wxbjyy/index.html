@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>微信背景音乐</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+<meta charset="utf-8">
+</head>
+
+<body>
+
+<audio id="audio1" src="http://dl.stream.qqmusic.qq.com/C200003g7Q6g0fv6fc.m4a?vkey=185D888091B1A400A36C9EB2E11C1D72D2B6034C28B46FC4C7C93C079B9B4524B4DAEB93F562A68AC3687D5594B18390503ED710055A1618&guid=3814877603&fromtag=30" preload loop></audio>
+<button id="button1" style="display:none;">暂停</button>
+
+<script>
+(function(){
+
+	var audio = document.getElementById('audio1');
+	var button1 = document.getElementById('button1');
+
+	//音乐开始播放，显示开关按钮
+	audio.addEventListener('play',function(){
+		button1.style.display='inline-block';
+	},false);
+
+	//开关按钮事件
+	button1.addEventListener('touchstart',function(){
+		if(button1.innerHTML == '播放'){
+			audio.play();
+			button1.innerHTML = '暂停';
+		}else{
+			audio.pause();
+			button1.innerHTML = '播放';
+		}
+	},false);
+
+	//播放
+	var play = function(){
+        audio.play();
+        document.removeEventListener("touchstart");
+    };
+
+	//其他移动浏览器，可以实现，滑动3秒后播放音乐
+	var touchLocked = false;
+	document.addEventListener('touchstart',function(e){
+		if(touchLocked)return;
+		touchLocked = true;
+		setTimeout(function(){
+			play();
+		},3000);
+	},false);
+
+	//微信端，只能立即播放，错过这个事件，就无法用代码播放音乐
+	document.addEventListener("WeixinJSBridgeReady", function () {//微信
+		play();
+	}, false);
+	document.addEventListener('YixinJSBridgeReady', function() {//易信
+		play();
+	}, false);
+
+})();
+</script>
+
+</body>
+</html>
