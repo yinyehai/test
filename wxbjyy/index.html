@@ -40,13 +40,8 @@
     };
 
 	//其他移动浏览器，可以实现，滑动3秒后播放音乐
-	var touchLocked = false;
 	document.addEventListener('touchstart',function(e){
-		if(touchLocked)return;
-		touchLocked = true;
-		setTimeout(function(){
-			play();
-		},3000);
+		play();
 	},false);
 
 	//微信端，只能立即播放，错过这个事件，就无法用代码播放音乐
