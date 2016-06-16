@@ -36,16 +36,11 @@
 	//播放
 	var play = function(){
         audio.play();
-        document.removeEventListener("touchstart");
+        document.removeEventListener("touchstart",play,false);
     };
 
 	//其他移动浏览器，可以实现，滑动3秒后播放音乐
-	var isPlay = false;
-	document.addEventListener('touchstart',function(e){
-		if(isPlay)return;
-		isPlay = true;
-		play();
-	},false);
+	document.addEventListener('touchstart',play,false);
 
 	//微信端，只能立即播放，错过这个事件，就无法用代码播放音乐
 	document.addEventListener("WeixinJSBridgeReady", function () {//微信
