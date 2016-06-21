@@ -141,20 +141,20 @@ body {
 <script type="text/javascript" src="iscroll-probe.js"></script>
 <script type="text/javascript">
 
-//µ¼º½Íâ²ã
+//å¯¼èˆªå¤–å±‚
 var nav_outer = document.getElementById('nav_outer');
-//µ¼º½
+//å¯¼èˆª
 var nav = document.getElementById('nav');
 
-//scroll¶ÔÏó
+//scrollå¯¹è±¡
 var myScroll = new IScroll('#wrapper', {
-	//Ã¿¹ö¶¯1ÏñËØ´Ù·¢Ò»´ÎÊÂ¼ş
+	//æ¯æ»šåŠ¨1åƒç´ ä¿ƒå‘ä¸€æ¬¡äº‹ä»¶
 	probeType:3, 
-	//Ö§³ÖÊó±ê¹öÂÖ
+	//æ”¯æŒé¼ æ ‡æ»šè½®
 	mouseWheel:true
 });
 
-//Ìí¼ÓÊÂ¼ş
+//æ·»åŠ äº‹ä»¶
 myScroll.on('scroll', updatePosition);
 myScroll.on('scrollEnd', updatePosition);
 
