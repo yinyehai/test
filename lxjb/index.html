@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title> New Document </title>
+<meta charset="utf-8">
+</head>
+
+<body>
+<canvas id="canvas1" width="500" height="300"></canvas>
+<script>
+	var canvas1 = document.getElementById('canvas1');
+	var ctx = canvas1.getContext('2d');
+
+	//黑色背景
+	ctx.save();
+	ctx.fillStyle = 'black';
+	ctx.beginPath();
+	ctx.rect(0,0,canvas1.width,canvas1.height);
+	ctx.fill();
+	ctx.restore();
+
+
+	ctx.save();
+	//绘制菱形
+	ctx.beginPath();
+	ctx.moveTo(0,64);
+	ctx.lineTo(86,98);
+	ctx.lineTo(165,150);
+	ctx.lineTo(250,150);
+	ctx.lineTo(330,97);
+	ctx.lineTo(418,75);
+	ctx.lineTo(500,150);
+	ctx.lineTo(0,150);
+	ctx.closePath();
+	//定义渐变
+	var grd = ctx.createLinearGradient(0, 64, 0, 150);
+	grd.addColorStop(0, 'rgba(255,255,255,0.6)');   
+	grd.addColorStop(1, 'rgba(255,255,255,0.1');
+	//填充渐变
+	ctx.fillStyle = grd;
+	ctx.fill();
+	ctx.strokeStyle = "rgba(255,255,255,.5)";
+	ctx.stroke();
+	ctx.restore();
+</script>
+</body>
+</html>
