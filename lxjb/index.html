@@ -7,6 +7,7 @@
 
 <body>
 <canvas id="canvas1" width="500" height="300"></canvas>
+
 <script>
 	var canvas1 = document.getElementById('canvas1');
 	var ctx = canvas1.getContext('2d');
@@ -19,7 +20,7 @@
 	ctx.fill();
 	ctx.restore();
 
-
+	//菱形渐变
 	ctx.save();
 	//绘制菱形
 	ctx.beginPath();
@@ -39,10 +40,22 @@
 	//填充渐变
 	ctx.fillStyle = grd;
 	ctx.fill();
-	//描边
-	ctx.strokeStyle = "rgba(255,255,255,.5)";
-	ctx.stroke();
 	ctx.restore();
+
+	//描边
+	//绘制线条
+	ctx.beginPath();
+	ctx.moveTo(0,64);
+	ctx.lineTo(86,98);
+	ctx.lineTo(165,150);
+	ctx.lineTo(250,150);
+	ctx.lineTo(330,97);
+	ctx.lineTo(418,75);
+	ctx.lineTo(500,150);
+	//描边
+	ctx.strokeStyle = "rgba(255,255,255,.6)";
+	ctx.stroke();
 </script>
+
 </body>
 </html>
