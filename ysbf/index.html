@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title> 延时播放 </title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+</head>
+
+<body>
+
+<audio src="1.mp3" id="audio" preload></audio>
+<button id="button1">延时播放</button>
+
+<script>
+var audio = document.getElementById('audio');
+var button1 = document.getElementById('button1');
+
+audio.onplay = function(){
+	button1.innerHTML = '播放ing';
+};
+
+audio.onpause = function(){
+	button1.innerHTML = '暂停';
+};
+
+button1.onclick = function(){
+	audio.play();
+	audio.pause();
+	setTimeout(function(){
+		audio.play();
+	},3000);
+};
+</script>
+
+</body>
+</html>
