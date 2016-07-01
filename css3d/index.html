@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title> New Document </title>
+<meta charset="utf-8">
+<style type="text/css">
+body{
+	width:36px;height:500px;position:absolute;
+	left:50%;top:50%;margin-left:-18px;margin-top:-250px;
+	perspective:800px;
+}
+.outer{
+	transform-style:preserve-3d;
+	transform-origin:center center -57.32484px;
+}
+.yuanzhu{
+	width:36px;height:500px;position:relative;
+	transform-style:preserve-3d;
+	transform-origin:center center -57.32484px;
+}
+.yuanzhuKuai{
+	width:36px;height:500px;
+	position:absolute;left:0px;top:0px;
+	background:url(01.jpg) no-repeat;
+	background-size:360px 500px;
+	transform-style:preserve-3d;
+	transform-origin:left;
+	transform:translateX(36px) rotateY(36deg);
+}
+</style>
+</head>
+
+<body>
+
+<div class="outer" id="outer">
+<div class="yuanzhu" id="yuanzhu">
+
+	<div class="yuanzhuKuai" style="background-position:left top;">
+		<div class="yuanzhuKuai" style="background-position:-36px top;">
+			<div class="yuanzhuKuai" style="background-position:-72px top;">
+				<div class="yuanzhuKuai" style="background-position:-108px top;">
+					<div class="yuanzhuKuai" style="background-position:-144px top;">
+						<div class="yuanzhuKuai" style="background-position:-180px top;">
+							<div class="yuanzhuKuai" style="background-position:-216px top;">
+								<div class="yuanzhuKuai" style="background-position:-252px top;">
+									<div class="yuanzhuKuai" style="background-position:-288px top;">
+										<div class="yuanzhuKuai" style="background-position:-324px top;">
+		
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+</div>
+
+<script>
+	var outer = document.getElementById('outer');
+	var yuanzhu = document.getElementById('yuanzhu');
+	var deg = 0;
+	outer.deg = 0;
+	setInterval(function(){
+		deg++;
+		if(deg>360)deg -= 360;
+		yuanzhu.style.transform='rotateY('+deg+'deg)';
+		//outer.style.transform='rotateX('+deg+'deg)';
+	},30);
+	var start = 0;
+	document.onmousedown=function(e){
+		start = e.clientY;
+		document.onmousemove=function(e){
+			var deg = (e.clientY - start);
+			outer.deg -= deg;
+			if(outer.deg>360)outer.deg -= 360;
+			outer.style.transform='rotateX('+outer.deg+'deg)';
+			start = e.clientY;
+		};
+		document.onmouseup=function(){
+			document.onmousemove=null;
+			document.onmouseup=null;
+		};
+	};
+</script>
+</body>
+</html>
