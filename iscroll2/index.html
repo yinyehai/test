@@ -81,10 +81,10 @@ body {
 </div>
 
 <script type="text/javascript" src="iscroll-probe.js"></script>
+
 <script type="text/javascript">
 //图片对象
-var img = document.getElementById('img');
-var cur = parseInt(img.style.backgroundPositionY);
+
 
 //scroll对象
 var myScroll = new IScroll('#wrapper', {
@@ -97,11 +97,16 @@ var myScroll = new IScroll('#wrapper', {
 //添加事件
 myScroll.on('scroll', updatePosition);
 myScroll.on('scrollEnd', updatePosition);
+
+var img = document.getElementById('img');
+var cur = parseInt(img.style.backgroundPositionY);
 function updatePosition () {
 	var target = Math.round(this.y*0.5);
 	img.style.backgroundPositionY = cur - target  +'px';
 }
+
 document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
 </script>
 </body>
 </html>
