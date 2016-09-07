@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+
+<title>iScroll demo: probe</title>
+
+<style type="text/css">
+* {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+html {
+	-ms-touch-action: none;
+}
+
+body,ul,li {
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+
+body {
+	font-size: 12px;
+	font-family: ubuntu, helvetica, arial;
+	overflow: hidden; /* this is important to prevent the whole page to bounce */
+}
+
+#wrapper {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background: #ccc;
+	overflow: hidden;
+}
+
+#scroller {
+	position: absolute;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	width: 100%;
+	-webkit-transform: translateZ(0);
+	-moz-transform: translateZ(0);
+	-ms-transform: translateZ(0);
+	-o-transform: translateZ(0);
+	transform: translateZ(0);
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-text-size-adjust: none;
+	-moz-text-size-adjust: none;
+	-ms-text-size-adjust: none;
+	-o-text-size-adjust: none;
+	text-size-adjust: none;
+}
+</style>
+</head>
+<body>
+
+<div id="wrapper">
+	<div id="scroller">
+
+		<!--内容start-->
+		<div style="height:2000px;background:#fff;">
+	
+			<!--头部start-->
+			<div style="height:100px;background:#fff;"></div>
+
+			<!--图片start-->
+			<div id="img" style="height:300px;background:url(01.jpg) center -400px;"></div>
+
+		</div>
+
+	</div>
+</div>
+
+<script type="text/javascript" src="iscroll-probe.js"></script>
+<script type="text/javascript">
+//图片对象
+var img = document.getElementById('img');
+var cur = parseInt(img.style.backgroundPositionY);
+
+//scroll对象
+var myScroll = new IScroll('#wrapper', {
+	//每滚动1像素促发一次事件
+	probeType:3, 
+	//支持鼠标滚轮
+	mouseWheel:true
+});
+
+//添加事件
+myScroll.on('scroll', updatePosition);
+myScroll.on('scrollEnd', updatePosition);
+function updatePosition () {
+	var target = Math.round(this.y*0.5);
+	img.style.backgroundPositionY = cur - target  +'px';
+}
+document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+</script>
+</body>
+</html>
