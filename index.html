@@ -61,7 +61,7 @@ function animateGo($clone)
 {
 	var speedY = -45;
 	var speedYn = 5;
-	var speedX = (center.x - $clone.offset().left) / getStep($clone.offset().top, speedY, speedYn, center.y);
+	var speedX = (center.x - $clone.offset().left) / getStep($clone.offset().top, speedY, speedYn, center.y-$clone.height()-20);
 	var fn = function(){
 		speedY += speedYn;
 		$clone.css({

@@ -10,8 +10,8 @@ html,body{margin:0;padding:0;}
 
 <body>
 
-<div style="height:200px;"></div>
-<div id="img" style="height:400px;background:url(01.jpg) center -400px;"></div>
+
+<div id="img" style="height:560px;background:url(02.jpg) center 0px;"></div>
 <div style="height:700px;"></div>
 <script>
 var img = document.getElementById('img');
@@ -22,7 +22,8 @@ function updatePosition (e) {
 	img.style.backgroundPositionY = cur +  target  +'px';
 }
 window.addEventListener('scroll',updatePosition,false);
-document.addEventListener('mousewheel',function(){},false);
+var last = 0;
+document.addEventListener('mousewheel',function(e){},false);
 </script>
 
 </body>
