@@ -165,9 +165,11 @@
                 setShuZhi(shuzhi);
             }
         };
+
+		wrap.appendChild(svg);
+
         animateFn();
 
-        wrap.appendChild(svg);
     };
 
     //默认值
