@@ -165,9 +165,8 @@
                 setShuZhi(shuzhi);
             }
         };
-
-		wrap.appendChild(svg);
-
+        
+        wrap.appendChild(svg);
         animateFn();
 
     };
