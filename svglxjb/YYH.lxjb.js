@@ -53,7 +53,7 @@
         };
         var colorZhi = 0;
         if(/^#[a-fA-F0-9]{3}$/.test(str)){
-            str = str.slice(1).replace(/[a-fA-F0-9]/,function(a){
+            str = str.slice(1).replace(/[a-fA-F0-9]/g,function(a){
                 return a+a;
             });
             colorZhi = parseInt(str,16);
