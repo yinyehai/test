@@ -103,8 +103,10 @@
         var startColor = parseColor(color1);
         var stopColor = parseColor(color2);
 
+        shuzhi = shuzhi>100?100:shuzhi;
         var zhouchang = 2 * Math.PI * banjing;
-        var geshu = 60;
+        var geshu = 60/35*banjing;
+        geshu = geshu>180?180:geshu;
         var sWidth = zhouchang / geshu;
         var dushu = 360 / geshu;
         var shiji = Math.round(geshu * shuzhi / 100);
@@ -165,7 +167,7 @@
                 setShuZhi(shuzhi);
             }
         };
-        
+
         wrap.appendChild(svg);
         animateFn();
 
