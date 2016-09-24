@@ -92,7 +92,7 @@
         var color1 = opts.color1 || LXJB.opts.color1;
         var color2 = opts.color2 || LXJB.opts.color2;
         var shuzhi = opts.shuzhi || LXJB.opts.shuzhi;
-        shuzhi = shuzhi>100?100:shuzhi;
+            shuzhi = shuzhi>100?100:shuzhi;
         var banjing = opts.banjing || LXJB.opts.banjing;
         var border = opts.border || LXJB.opts.border;
         var bgColor = opts.bgColor || LXJB.opts.bgColor;
@@ -107,7 +107,7 @@
 
         var zhouchang = 2 * Math.PI * banjing;
         var geshu = Math.round(60/35*banjing);
-        geshu = geshu>180?180:geshu;
+            geshu = geshu>180?180:geshu;
         var sWidth = zhouchang / geshu;
         var dushu = 360 / geshu;
         var shiji = Math.round(geshu * shuzhi / 100);
