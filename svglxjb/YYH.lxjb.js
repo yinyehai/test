@@ -80,8 +80,8 @@
                 colorZhi += parseInt(b.replace(/\s/,''))<<8;
                 colorZhi += parseInt(c.replace(/\s/,''));
             });
-        }else if(/^rgba\s*\([\d\s]+,[\d\s]+,[\d\s]+,[\.\d\s]+\)\s*$/.test(str)){
-            str.replace(/([\d\s]+),([\d\s]+),([\d\s]+),([\.\d\s]+)/,function(quan,a,b,c,d){
+        }else if(/^rgba\s*\([\d\s]+,[\d\s]+,[\d\s]+,(\d+|\d+\.\d+|\.\d+|\d+\.)\)\s*$/.test(str)){
+            str.replace(/([\d\s]+),([\d\s]+),([\d\s]+),(\d+|\d+\.\d+|\.\d+|\d+\.)/,function(quan,a,b,c,d){
                 colorZhi += parseInt(a.replace(/\s/,''))<<16;
                 colorZhi += parseInt(b.replace(/\s/,''))<<8;
                 colorZhi += parseInt(c.replace(/\s/,''));
