@@ -18,6 +18,16 @@
 
     var document = window.document;
 
+    //动画工具函数
+    var requestAnimFrame = (function(){
+        return  window.requestAnimationFrame       ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame    ||
+            function( callback ){
+                window.setTimeout(callback, 1000 / 60);
+            };
+    })();
+
     //创建svg元素
     var createSvgTag = function(tagName,attr,innerHTML)
     {
@@ -92,7 +102,7 @@
         var color1 = opts.color1 || LXJB.opts.color1;
         var color2 = opts.color2 || LXJB.opts.color2;
         var shuzhi = typeof opts.shuzhi == 'undefined' ? LXJB.opts.shuzhi : opts.shuzhi ;
-            shuzhi = shuzhi>100?100:shuzhi;
+        shuzhi = shuzhi>100?100:shuzhi;
         var banjing = opts.banjing || LXJB.opts.banjing;
         var border = opts.border || LXJB.opts.border;
         var bgColor = opts.bgColor || LXJB.opts.bgColor;
@@ -107,7 +117,7 @@
 
         var zhouchang = 2 * Math.PI * banjing;
         var geshu = Math.round(60/35*banjing);
-            geshu = geshu>180?180:geshu;
+        geshu = geshu>180?180:geshu;
         var dushu = 360 / geshu;
         var hudu = dushu * Math.PI / 180;
         var hudu2 = hudu / 2;
@@ -197,7 +207,7 @@
             setShuZhi(Math.floor(suoyin/shiji*shuzhi));
             animateGo(suoyin);
             if(now<speed){
-                setTimeout(animateFn,10)
+                requestAnimFrame(animateFn)
             }else{
                 animateGo(shiji-1);
                 setShuZhi(shuzhi);
