@@ -207,13 +207,14 @@
         //动画
         var animateGo = function(i){
             while(true){
-                if(!(i in animateQuee))break;
-                if(animateQuee[i].getAttribute('opacity')==1)break;
-                animateQuee[i].setAttribute('opacity',1);
-                i--;
+                if(animateCur>shiji-1)break;
+                animateQuee[animateCur].setAttribute('opacity',1);
+                if(animateCur==i)break;
+                animateCur++;
             }
         };
         var start = Date.now();
+        var animateCur = 0;
         var animateFn = function(){
             var now = Date.now()-start;
             var suoyin = Math.floor(shiji*now/speed);
