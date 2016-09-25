@@ -108,8 +108,9 @@
         var zhouchang = 2 * Math.PI * banjing;
         var geshu = Math.round(60/35*banjing);
             geshu = geshu>180?180:geshu;
-        var sWidth = zhouchang / geshu;
         var dushu = 360 / geshu;
+        var hudu = dushu * Math.PI / 180;
+        var hudu2 = hudu / 2;
         var shiji = Math.round(geshu * shuzhi / 100);
 
         //svg
@@ -123,13 +124,44 @@
         var jianbianG = createSvgTag('g');
         var firstPath = null;
         var animateQuee = [];
+        var h1 = Math.cos(-hudu2) * banjing;
+        var h2 = Math.cos(hudu2) * (banjing - border);
+        var p1 = {
+            x:banjing + Math.sin(-hudu2) * banjing,
+            y:banjing - h1
+        };
+        var p2 = {
+            x:banjing + Math.sin(hudu2) * banjing,
+            y:banjing - h1
+        };
+        var p3 = {
+            x:banjing + Math.sin(hudu2) * (banjing - border),
+            y:banjing - h2
+        };
+        var p4 = {
+            x:banjing + Math.sin(-hudu2) * (banjing - border),
+            y:banjing - h2
+        };
+        var s1 = {
+            x:banjing,
+            y:p1.y - (banjing - h1)
+        };
+        var s2 = {
+            x:banjing,
+            y:p3.y - (banjing - border - h2)
+        };
         for(var i=0;i<shiji;i++){
             var r = Math.round(startColor.r + (stopColor.r-startColor.r) * i/shiji);
             var g = Math.round(startColor.g + (stopColor.g-startColor.g) * i/shiji);
             var b = Math.round(startColor.b + (stopColor.b-startColor.b) * i/shiji);
             var a = Math.round(startColor.a*100 + (stopColor.a*100-startColor.a*100) * i/shiji)/100;
-            var path = createSvgTag('rect',{fill:'rgba('+r+','+g+','+b+','+a+')',x:banjing,y:0,width:sWidth,height:border,transform:'rotate('+i*dushu+' '+banjing+' '+banjing+')',opacity:0});
-            if(i==0){
+            var path = createSvgTag('path',{
+                d:'M'+p1.x+','+p1.y+'Q'+s1.x+','+s1.y+','+p2.x+','+p2.y+'L'+p3.x+','+p3.y+'Q'+s2.x+','+s2.y+','+p4.x+','+p4.y+'Z',
+                fill:'rgba('+r+','+g+','+b+','+a+')',
+                transform:'rotate('+i*dushu+' '+banjing+' '+banjing+')',
+                opacity:0
+            });
+			if(i==0){
                 firstPath = path;
             }else{
                 jianbianG.appendChild(path);
