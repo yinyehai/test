@@ -110,7 +110,7 @@
         var banjing = opts.banjing || LXJB.opts.banjing;
         var border = opts.border || LXJB.opts.border;
         var bgColor = opts.bgColor || LXJB.opts.bgColor;
-        var speed = opts.speed || LXJB.opts.speed;
+        var speed = typeof opts.speed == 'undefined' ? LXJB.opts.speed : opts.speed ;
         var wrap = opts.wrap || LXJB.opts.wrap;
         var fontSize = opts.fontSize || LXJB.opts.fontSize;
         var fontColor = opts.fontColor || LXJB.opts.fontColor;
