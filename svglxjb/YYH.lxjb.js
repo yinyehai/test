@@ -207,7 +207,7 @@
             setShuZhi(Math.floor(suoyin/shiji*shuzhi));
             animateGo(suoyin);
             if(now<speed){
-                requestAnimFrame(animateFn)
+                requestAnimFrame(animateFn);
             }else{
                 animateGo(shiji-1);
                 setShuZhi(shuzhi);
