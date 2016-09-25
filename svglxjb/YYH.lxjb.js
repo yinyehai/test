@@ -161,7 +161,7 @@
                 transform:'rotate('+i*dushu+' '+banjing+' '+banjing+')',
                 opacity:0
             });
-			if(i==0){
+            if(i==0){
                 firstPath = path;
             }else{
                 jianbianG.appendChild(path);
