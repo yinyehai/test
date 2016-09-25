@@ -91,7 +91,7 @@
         //提取参数
         var color1 = opts.color1 || LXJB.opts.color1;
         var color2 = opts.color2 || LXJB.opts.color2;
-        var shuzhi = opts.shuzhi || LXJB.opts.shuzhi;
+        var shuzhi = typeof opts.shuzhi == 'undefined' ? LXJB.opts.shuzhi : opts.shuzhi ;
             shuzhi = shuzhi>100?100:shuzhi;
         var banjing = opts.banjing || LXJB.opts.banjing;
         var border = opts.border || LXJB.opts.border;
@@ -168,13 +168,16 @@
             }
             animateQuee.push(path);
         }
-        jianbianG.appendChild(firstPath);
+        if(firstPath){
+            jianbianG.appendChild(firstPath);
+        }
         svg.appendChild(jianbianG);
 
         //数字
         var shuzi = createSvgTag('text',{'x':banjing,'y':banjing+border/2,'fill':fontColor,'font-size':fontSize,'font-family':fontFamily,'text-anchor':'middle'},shuzhi);
         svg.appendChild(shuzi);
         var setShuZhi = function(str){
+            if(isNaN(str))str = 0;
             shuzi.textContent = str;
         };
 
