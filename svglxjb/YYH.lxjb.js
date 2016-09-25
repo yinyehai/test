@@ -20,9 +20,9 @@
 
     //动画工具函数
     var requestAnimFrame = (function(){
-        return  window.requestAnimationFrame       ||
-            window.webkitRequestAnimationFrame ||
-            window.mozRequestAnimationFrame    ||
+        return  window.requestAnimationFrame    ||
+            window.webkitRequestAnimationFrame  ||
+            window.mozRequestAnimationFrame     ||
             function( callback ){
                 window.setTimeout(callback, 1000 / 60);
             };
@@ -35,7 +35,11 @@
         if(attr){
             for(var i in attr)
             {
-                ele.setAttribute(i,attr[i]);
+                if(/^xlink:/.test(i)){
+                    ele.setAttributeNS("http://www.w3.org/1999/xlink",i,attr[i]);
+                }else{
+                    ele.setAttribute(i,attr[i]);
+                }
             }
         }
         if(innerHTML){
@@ -102,7 +106,7 @@
         var color1 = opts.color1 || LXJB.opts.color1;
         var color2 = opts.color2 || LXJB.opts.color2;
         var shuzhi = typeof opts.shuzhi == 'undefined' ? LXJB.opts.shuzhi : opts.shuzhi ;
-        shuzhi = shuzhi>100?100:shuzhi;
+            shuzhi = shuzhi>100?100:shuzhi;
         var banjing = opts.banjing || LXJB.opts.banjing;
         var border = opts.border || LXJB.opts.border;
         var bgColor = opts.bgColor || LXJB.opts.bgColor;
@@ -114,10 +118,8 @@
         var startColor = parseColor(color1);
         var stopColor = parseColor(color2);
 
-
-        var zhouchang = 2 * Math.PI * banjing;
         var geshu = Math.round(60/35*banjing);
-        geshu = geshu>180?180:geshu;
+            geshu = geshu>180?180:geshu;
         var dushu = 360 / geshu;
         var hudu = dushu * Math.PI / 180;
         var hudu2 = hudu / 2;
@@ -126,14 +128,8 @@
         //svg
         var svg = createSvgTag('svg',{width:banjing*2,height:banjing*2,version:'1.1',xmlns:'http://www.w3.org/2000/svg'});
 
-        //背景
-        var circle = createSvgTag('circle',{cx:banjing,cy:banjing,r:banjing-border/2,fill:'none',stroke:bgColor,'stroke-width':border});
-        svg.appendChild(circle);
-
-        //前景组
-        var jianbianG = createSvgTag('g');
-        var firstPath = null;
-        var animateQuee = [];
+        //模板
+        var templateId = 'templateId'+Math.random();
         var h1 = Math.cos(-hudu2) * banjing;
         var h2 = Math.cos(hudu2) * (banjing - border);
         var p1 = {
@@ -160,13 +156,30 @@
             x:banjing,
             y:p3.y - (banjing - border - h2)
         };
+        var defs = createSvgTag('defs');
+        var templatePath = createSvgTag('path',{
+            id:templateId,
+            d:'M'+p1.x+','+p1.y+'Q'+s1.x+','+s1.y+','+p2.x+','+p2.y+'L'+p3.x+','+p3.y+'Q'+s2.x+','+s2.y+','+p4.x+','+p4.y+'Z',
+            opacity:1
+        });
+        defs.appendChild(templatePath);
+        svg.appendChild(defs);
+
+        //背景
+        var circle = createSvgTag('circle',{cx:banjing,cy:banjing,r:banjing-border/2,fill:'none',stroke:bgColor,'stroke-width':border});
+        svg.appendChild(circle);
+
+        //前景组
+        var jianbianG = createSvgTag('g');
+        var firstPath = null;
+        var animateQuee = [];
         for(var i=0;i<shiji;i++){
             var r = Math.round(startColor.r + (stopColor.r-startColor.r) * i/shiji);
             var g = Math.round(startColor.g + (stopColor.g-startColor.g) * i/shiji);
             var b = Math.round(startColor.b + (stopColor.b-startColor.b) * i/shiji);
             var a = Math.round(startColor.a*100 + (stopColor.a*100-startColor.a*100) * i/shiji)/100;
-            var path = createSvgTag('path',{
-                d:'M'+p1.x+','+p1.y+'Q'+s1.x+','+s1.y+','+p2.x+','+p2.y+'L'+p3.x+','+p3.y+'Q'+s2.x+','+s2.y+','+p4.x+','+p4.y+'Z',
+            var path = createSvgTag('use',{
+                'xlink:href':'#'+templateId,
                 fill:'rgba('+r+','+g+','+b+','+a+')',
                 transform:'rotate('+i*dushu+' '+banjing+' '+banjing+')',
                 opacity:0
