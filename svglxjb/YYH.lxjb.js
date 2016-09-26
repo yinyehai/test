@@ -123,33 +123,30 @@
             geshu += geshu%2;
         var dushu = 360 / geshu;
         var hudu = dushu * Math.PI / 180;
+        var hudu2 = hudu / 2;
         var shiji = Math.round(geshu * shuzhi / 100);
 
         //svg
         var svg = createSvgTag('svg',{width:banjing*2,height:banjing*2,version:'1.1',xmlns:'http://www.w3.org/2000/svg'});
 
-        //背景
-        var circle = createSvgTag('circle',{cx:banjing,cy:banjing,r:banjing-border/2,fill:'none',stroke:bgColor,'stroke-width':border});
-        svg.appendChild(circle);
-
         //模板
         var templateId = 'templateId'+Math.random();
-        var h1 = Math.cos(hudu) * banjing;
-        var h2 = Math.cos(hudu) * (banjing - border);
+        var h1 = Math.cos(-hudu2) * banjing;
+        var h2 = Math.cos(hudu2) * (banjing - border);
         var p1 = {
-            x:banjing + Math.sin(0) * banjing,
+            x:banjing + Math.sin(-hudu2) * banjing,
             y:banjing - h1
         };
         var p2 = {
-            x:banjing + Math.sin(hudu) * banjing,
+            x:banjing + Math.sin(hudu2) * banjing,
             y:banjing - h1
         };
         var p3 = {
-            x:banjing + Math.sin(hudu) * (banjing - border),
+            x:banjing + Math.sin(hudu2) * (banjing - border),
             y:banjing - h2
         };
         var p4 = {
-            x:banjing + Math.sin(0) * (banjing - border),
+            x:banjing + Math.sin(-hudu2) * (banjing - border),
             y:banjing - h2
         };
         var s1 = {
@@ -169,8 +166,12 @@
         defs.appendChild(templatePath);
         svg.appendChild(defs);
 
+        //背景
+        var circle = createSvgTag('circle',{cx:banjing,cy:banjing,r:banjing-border/2,fill:'none',stroke:bgColor,'stroke-width':border});
+        svg.appendChild(circle);
+
         //前景组
-        var jianbianG = createSvgTag('g');
+        var jianbianG = createSvgTag('g',{transform:'rotate('+dushu/2+' '+banjing+' '+banjing+')'});
         var firstPath = null;
         var animateQuee = [];
         for(var i=0;i<shiji;i++){
