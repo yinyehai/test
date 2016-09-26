@@ -134,7 +134,7 @@
 
         //模板
         var templateId = 'templateId'+Math.random();
-        var h1 = Math.cos(0) * banjing;
+        var h1 = Math.cos(hudu) * banjing;
         var h2 = Math.cos(hudu) * (banjing - border);
         var p1 = {
             x:banjing + Math.sin(0) * banjing,
