@@ -190,7 +190,7 @@
         svg.appendChild(jianbianG);
 
         //数字
-        var shuzi = createSvgTag('text',{'x':banjing,'y':banjing+border/2,'fill':fontColor,'font-size':fontSize,'font-family':fontFamily,'text-anchor':'middle'},shuzhi);
+        var shuzi = createSvgTag('text',{'x':banjing,'y':banjing,dy:'.3em','fill':fontColor,'font-size':fontSize,'font-family':fontFamily,'text-anchor':'middle'},shuzhi);
         svg.appendChild(shuzi);
         var setShuZhi = function(str){
             if(isNaN(str))str = 0;
