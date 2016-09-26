@@ -129,6 +129,10 @@
         //svg
         var svg = createSvgTag('svg',{width:banjing*2,height:banjing*2,version:'1.1',xmlns:'http://www.w3.org/2000/svg'});
 
+        //背景
+        var circle = createSvgTag('circle',{cx:banjing,cy:banjing,r:banjing-border/2,fill:'none',stroke:bgColor,'stroke-width':border});
+        svg.appendChild(circle);
+
         //模板
         var templateId = 'templateId'+Math.random();
         var h1 = Math.cos(-hudu2) * banjing;
@@ -166,13 +170,8 @@
         defs.appendChild(templatePath);
         svg.appendChild(defs);
 
-        //背景
-        var circle = createSvgTag('circle',{cx:banjing,cy:banjing,r:banjing-border/2,fill:'none',stroke:bgColor,'stroke-width':border});
-        svg.appendChild(circle);
-
         //前景组
         var jianbianG = createSvgTag('g',{transform:'rotate('+dushu/2+' '+banjing+' '+banjing+')'});
-        var firstPath = null;
         var animateQuee = [];
         for(var i=0;i<shiji;i++){
             var r = Math.round(startColor.r + (stopColor.r-startColor.r) * i/shiji);
@@ -185,15 +184,8 @@
                 transform:'rotate('+i*dushu+' '+banjing+' '+banjing+')',
                 opacity:0
             });
-            if(i==0){
-                firstPath = path;
-            }else{
-                jianbianG.appendChild(path);
-            }
+            jianbianG.appendChild(path);
             animateQuee.push(path);
-        }
-        if(firstPath){
-            jianbianG.appendChild(firstPath);
         }
         svg.appendChild(jianbianG);
 
