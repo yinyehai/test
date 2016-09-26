@@ -120,6 +120,7 @@
 
         var geshu = Math.round(60/35*banjing);
             geshu = geshu>180?180:geshu;
+            geshu += geshu%2;
         var dushu = 360 / geshu;
         var hudu = dushu * Math.PI / 180;
         var hudu2 = hudu / 2;
@@ -170,7 +171,7 @@
         svg.appendChild(circle);
 
         //前景组
-        var jianbianG = createSvgTag('g');
+        var jianbianG = createSvgTag('g',{transform:'rotate('+dushu/2+' '+banjing+' '+banjing+')'});
         var firstPath = null;
         var animateQuee = [];
         for(var i=0;i<shiji;i++){
