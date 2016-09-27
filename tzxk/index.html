@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title> 拖拽虚框 </title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+</head>
+
+<body>
+	
+<script>
+document.onmousedown = function(e){
+	var ox = e.clientX;
+	var oy = e.clientY;
+	document.onmousemove = function(e){
+		if(!document.xukuang){
+			var div  = document.createElement('div');
+			div.style.position = 'absolute';
+			div.style.border = '1px dotted';
+			document.body.appendChild(div);
+			document.xukuang = div;
+		}
+		var left,top,width,height;
+		if(e.clientX > ox){
+			left = ox;
+			width = e.clientX - ox;
+		}else{
+			left = e.clientX;
+			width = ox - e.clientX;
+		}
+		if(e.clientY > oy){
+			top = oy;
+			height = e.clientY - oy;
+		}else{
+			top = e.clientY;
+			height = oy - e.clientY;
+		}
+		document.xukuang.style.display = 'block';
+		document.xukuang.style.left = left + 'px';
+		document.xukuang.style.top = top + 'px';
+		document.xukuang.style.width = width + 'px';
+		document.xukuang.style.height = height + 'px';
+	};
+	document.onselectstart = function(){return false;};
+	document.onmouseup = function(){
+		document.onmousemove = null;
+		document.onmouseup = null;
+		document.onselectstart = null;
+		document.xukuang.style.display = 'none';
+	};
+};
+</script>
+
+</body>
+</html>
