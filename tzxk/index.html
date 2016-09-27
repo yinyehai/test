@@ -4,19 +4,57 @@
 <title> 拖拽虚框 </title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+
+<style type="text/css">
+@keyframes xukuang_animate{from{background-position-x:0%;}to{background-position-x:100%;}}
+.xukuang{width:300px;height:300px;position:relative;}
+.xukuang_items{position:absolute;background:linear-gradient(45deg,#000,#000 25%,#fff 25%,#fff 50%,#000 50%,#000 75%,#fff 75%) left top/8px 8px;animation:xukuang_animate linear infinite;}
+.xukuang_left,.xukuang_right{width:1px;height:100%;top:0px;animation:xukuang_animate linear infinite;}
+.xukuang_left{left:0px;}
+.xukuang_right{right:0px;}
+.xukuang_top,.xukuang_bottom{width:100%;height:1px;left:0px;}
+.xukuang_top{top:0px;}
+.xukuang_bottom{bottom:0px;}
+</style>
+
 </head>
 
 <body>
-	
+
 <script>
 document.onmousedown = function(e){
 	var ox = e.clientX;
 	var oy = e.clientY;
+	var isMove = false;
 	document.onmousemove = function(e){
+		isMove = true;
 		if(!document.xukuang){
 			var div  = document.createElement('div');
 			div.style.position = 'absolute';
-			div.style.border = '1px dotted';
+			div.className = 'xukuang';
+
+			var div_left = document.createElement('div');
+			div_left.className = 'xukuang_items xukuang_left';
+
+			var div_right = document.createElement('div');
+			div_right.className = 'xukuang_items xukuang_right';
+
+			var div_top = document.createElement('div');
+			div_top.className = 'xukuang_items xukuang_top';
+
+			var div_bottom = document.createElement('div');
+			div_bottom.className = 'xukuang_items xukuang_bottom';
+
+			div.appendChild(div_left);
+			div.appendChild(div_right);
+			div.appendChild(div_top);
+			div.appendChild(div_bottom);
+
+			div.div_left = div_left;
+			div.div_right = div_right;
+			div.div_top = div_top;
+			div.div_bottom = div_bottom;
+
 			document.body.appendChild(div);
 			document.xukuang = div;
 		}
@@ -31,13 +69,21 @@ document.onmousedown = function(e){
 		document.xukuang.style.top = top + 'px';
 		document.xukuang.style.width = width + 'px';
 		document.xukuang.style.height = height + 'px';
+
+		var duration = width/20 + 's';
+		document.xukuang.div_left.style.animationDuration = '.4s';
+		document.xukuang.div_right.style.animationDuration = '.4s';
+		document.xukuang.div_top.style.animationDuration = duration;
+		document.xukuang.div_bottom.style.animationDuration = duration;
 	};
 	document.onselectstart = function(){return false;};
 	document.onmouseup = function(){
 		document.onmousemove = null;
 		document.onmouseup = null;
 		document.onselectstart = null;
-		document.xukuang.style.display = 'none';
+		if(!isMove && document.xukuang){
+			document.xukuang.style.display = 'none';
+		}
 	};
 };
 </script>
