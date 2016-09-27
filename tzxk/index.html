@@ -20,21 +20,12 @@ document.onmousedown = function(e){
 			document.body.appendChild(div);
 			document.xukuang = div;
 		}
-		var left,top,width,height;
-		if(e.clientX > ox){
-			left = ox;
-			width = e.clientX - ox;
-		}else{
-			left = e.clientX;
-			width = ox - e.clientX;
-		}
-		if(e.clientY > oy){
-			top = oy;
-			height = e.clientY - oy;
-		}else{
-			top = e.clientY;
-			height = oy - e.clientY;
-		}
+
+		var left = e.clientX > ox ? ox : e.clientX ;
+		var top = e.clientY > oy ? oy : e.clientY;
+		var width = Math.abs(e.clientX - ox);
+		var height = Math.abs(e.clientY - oy);
+
 		document.xukuang.style.display = 'block';
 		document.xukuang.style.left = left + 'px';
 		document.xukuang.style.top = top + 'px';
