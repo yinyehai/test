@@ -6,13 +6,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
 
 <style type="text/css">
-@keyframes xukuang_animate{from{background-position-x:0%;}to{background-position-x:100%;}}
+@keyframes xukuang_animate1{from{background-position-y:0%;}to{background-position-y:100%;}}
+@keyframes xukuang_animate2{from{background-position-x:0%;}to{background-position-x:100%;}}
 .xukuang{position:relative;}
-.xukuang_items{position:absolute;background:linear-gradient(45deg,#000,#000 25%,#fff 25%,#fff 50%,#000 50%,#000 75%,#fff 75%) left top/8px 8px;animation:xukuang_animate linear infinite;}
-.xukuang_left,.xukuang_right{width:1px;height:100%;top:0px;}
+.xukuang_items{position:absolute;background:linear-gradient(45deg,#000,#000 25%,#fff 25%,#fff 50%,#000 50%,#000 75%,#fff 75%) -1px top/8px 8px;}
+.xukuang_left,.xukuang_right{width:1px;height:100%;top:0px;animation:xukuang_animate1 linear infinite;}
 .xukuang_left{left:0px;}
 .xukuang_right{right:0px;}
-.xukuang_top,.xukuang_bottom{width:100%;height:1px;left:0px;}
+.xukuang_top,.xukuang_bottom{width:100%;height:1px;left:0px;animation:xukuang_animate2 linear infinite;}
 .xukuang_top{top:0px;}
 .xukuang_bottom{bottom:0px;}
 </style>
@@ -21,60 +22,60 @@
 
 <body>
 
+<!--示例代码start-->
+<div class="xukuang" style="position: absolute; display: block; left: 50%; top:100px; width: 440px; height: 180px; margin-left:-220px;"><div class="xukuang_items xukuang_left" style="animation-duration: 9.35s;"></div><div class="xukuang_items xukuang_right" style="animation-duration: 9.35s;"></div><div class="xukuang_items xukuang_top" style="animation-duration: 22s;"></div><div class="xukuang_items xukuang_bottom" style="animation-duration: 22s;"></div></div>
+<!--示例代码end-->
+
 <script>
 document.onmousedown = function(e){
 	var ox = e.clientX;
 	var oy = e.clientY;
 	var isMove = false;
+	if(!document.init){
+		document.init = true;
+		var xukuang = document.querySelector('.xukuang');
+		xukuang.parentNode.removeChild(xukuang);
+	}
 	document.onmousemove = function(e){
 		isMove = true;
 		if(!document.xukuang){
 			var div  = document.createElement('div');
 			div.style.position = 'absolute';
 			div.className = 'xukuang';
-
 			var div_left = document.createElement('div');
 			div_left.className = 'xukuang_items xukuang_left';
-
 			var div_right = document.createElement('div');
 			div_right.className = 'xukuang_items xukuang_right';
-
 			var div_top = document.createElement('div');
 			div_top.className = 'xukuang_items xukuang_top';
-
 			var div_bottom = document.createElement('div');
 			div_bottom.className = 'xukuang_items xukuang_bottom';
-
 			div.appendChild(div_left);
 			div.appendChild(div_right);
 			div.appendChild(div_top);
 			div.appendChild(div_bottom);
-
 			div.div_left = div_left;
 			div.div_right = div_right;
 			div.div_top = div_top;
 			div.div_bottom = div_bottom;
-
 			document.body.appendChild(div);
 			document.xukuang = div;
 		}
-
 		var left = e.clientX > ox ? ox : e.clientX;
 		var top = e.clientY > oy ? oy : e.clientY;
 		var width = Math.abs(e.clientX - ox);
 		var height = Math.abs(e.clientY - oy);
-
 		document.xukuang.style.display = 'block';
 		document.xukuang.style.left = left + 'px';
 		document.xukuang.style.top = top + 'px';
 		document.xukuang.style.width = width + 'px';
 		document.xukuang.style.height = height + 'px';
-
-		var duration = width/20 + 's';
-		document.xukuang.div_left.style.animationDuration = '.4s';
-		document.xukuang.div_right.style.animationDuration = '.4s';
-		document.xukuang.div_top.style.animationDuration = duration;
-		document.xukuang.div_bottom.style.animationDuration = duration;
+		var duration1 = height/20 + 's';
+		var duration2 = width/20 + 's';
+		document.xukuang.div_left.style.animationDuration = duration1;
+		document.xukuang.div_right.style.animationDuration = duration1;
+		document.xukuang.div_top.style.animationDuration = duration2;
+		document.xukuang.div_bottom.style.animationDuration = duration2;
 	};
 	document.onselectstart = function(){return false;};
 	document.onmouseup = function(){
