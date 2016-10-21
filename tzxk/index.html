@@ -22,11 +22,22 @@
 
 <body>
 
+<!--示例代码start-->
+<div class="xukuang" style="position: absolute; display: block; left: 50%; top:100px; width: 440px; height: 180px; margin-left:-220px;"><div class="xukuang_items xukuang_left" style="animation-duration: 9.35s;"></div><div class="xukuang_items xukuang_right" style="animation-duration: 9.35s;"></div><div class="xukuang_items xukuang_top" style="animation-duration: 22s;"></div><div class="xukuang_items xukuang_bottom" style="animation-duration: 22s;"></div></div>
+<!--示例代码end-->
+
 <script>
 document.onmousedown = function(e){
 	var ox = e.clientX;
 	var oy = e.clientY;
 	var isMove = false;
+
+	if(!document.init){
+		document.init = true;
+		var xukuang = document.querySelector('.xukuang');
+		xukuang.parentNode.removeChild(xukuang);
+	}
+
 	document.onmousemove = function(e){
 		isMove = true;
 		if(!document.xukuang){
@@ -60,11 +71,10 @@ document.onmousedown = function(e){
 			document.xukuang = div;
 		}
 
-		var left = e.clientX > ox ? ox : e.clientX ;
+		var left = e.clientX > ox ? ox : e.clientX;
 		var top = e.clientY > oy ? oy : e.clientY;
 		var width = Math.abs(e.clientX - ox);
 		var height = Math.abs(e.clientY - oy);
-
 
 		document.xukuang.style.display = 'block';
 		document.xukuang.style.left = left + 'px';
