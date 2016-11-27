@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title> 跟随鼠标的环形渐变 </title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<style type="text/css">
+	html,body,ul,li{margin:0;padding:0;}
+	ul{list-style:none;}
+	ul li{border-radius:50%;border:1px #f00 solid;position:absolute;}
+</style>
+</head>
+
+<body>
+
+<script>
+
+//li个数
+var liNum = 20;
+//最小li宽高
+var liMinWidth = 10;
+//大小li之间的坐标偏移
+var pianYi = liMinWidth/2;
+//鼠标x值
+var mouseX = 0;
+//鼠标y值
+var mouseY = 0;
+//li容器
+var lis = [];
+//色调度数0-360
+var colorDeg = 360;
+//色调跨度
+var colorSet = colorDeg / liNum;
+
+
+//添加ul,li
+var ul = document.createElement('ul');
+for(var i=0;i<liNum;i++){
+	var li = document.createElement('li');
+	li.style.width = li.style.height = liMinWidth*(i+1) + 'px';
+	li.x = mouseX - li.offsetWidth / 2;
+	li.y = mouseY - li.offsetHeight / 2;
+	lis.push(li);
+	ul.appendChild(li);
+}
+document.body.appendChild(ul);
+
+//鼠标事件
+document.onmousemove = function(e){
+	mouseX = e.clientX;
+	mouseY = e.clientY;
+};
+
+//循环动画
+var run = function(){
+	for(var i=lis.length-1; i>0; i--){
+		lis[i].style.left = lis[i-1].offsetLeft - pianYi + 'px';
+		lis[i].style.top = lis[i-1].offsetTop - pianYi + 'px';
+		var color = colorDeg + i * colorSet;
+		lis[i].style.borderColor = 'hsl('+ color +', 50%, 50%)';
+	}
+	lis[0].style.left = mouseX - lis[0].offsetWidth / 2 + 'px';
+	lis[0].style.top = mouseY - lis[0].offsetHeight / 2 + 'px';
+	lis[0].style.borderColor = 'hsl('+colorDeg+', 50%, 50%)';
+	colorDeg-=10;
+	if(colorDeg<0)colorDeg+=360;
+	setTimeout(run,30);
+};
+run();
+
+</script>
+
+</body>
+</html>
