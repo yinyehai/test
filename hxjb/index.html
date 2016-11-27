@@ -22,16 +22,15 @@ var liMinWidth = 10;
 //大小li之间的坐标偏移
 var pianYi = liMinWidth/2;
 //鼠标x值
-var mouseX = 0;
+var mouseX = document.documentElement.clientWidth/2;
 //鼠标y值
-var mouseY = 0;
+var mouseY = document.documentElement.clientHeight/2;
 //li容器
 var lis = [];
 //色调度数0-360
 var colorDeg = 360;
 //色调跨度
 var colorSet = colorDeg / liNum;
-
 
 //添加ul,li
 var ul = document.createElement('ul');
