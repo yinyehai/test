@@ -37,8 +37,6 @@ var ul = document.createElement('ul');
 for(var i=0;i<liNum;i++){
 	var li = document.createElement('li');
 	li.style.width = li.style.height = liMinWidth*(i+1) + 'px';
-	li.x = mouseX - li.offsetWidth / 2;
-	li.y = mouseY - li.offsetHeight / 2;
 	lis.push(li);
 	ul.appendChild(li);
 }
