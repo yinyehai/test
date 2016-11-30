@@ -38,9 +38,7 @@ for(var i=0;i<liNum;i++){
 	var li = document.createElement('li');
 	li.style.width = li.style.height = liMinWidth*(i+1) + 'px';
 	lis.push(li);
-}
-for(var i=liNum-1;i>=0;i--){
-	ul.appendChild(lis[i]);
+	ul.appendChild(li);
 }
 document.body.appendChild(ul);
 
