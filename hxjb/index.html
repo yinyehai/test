@@ -56,8 +56,10 @@ var run = function(){
 		var color = colorDeg + i * colorSet;
 		lis[i].style.borderColor = 'hsl('+ color +', 50%, 50%)';
 	}
-	lis[0].style.left = mouseX - pianYi + 'px';
-	lis[0].style.top = mouseY - pianYi + 'px';
+	var speedX = (mouseX - pianYi - lis[0].offsetLeft) * 0.2;
+	var speedY = (mouseY - pianYi - lis[0].offsetTop) * 0.2;
+	lis[0].style.left = lis[0].offsetLeft + speedX + 'px';
+	lis[0].style.top = lis[0].offsetTop + speedY + 'px';
 	lis[0].style.borderColor = 'hsl('+colorDeg+', 50%, 50%)';
 	colorDeg-=10;
 	if(colorDeg<0)colorDeg+=360;
