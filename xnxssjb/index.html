@@ -150,7 +150,7 @@ ul{list-style:none;}
 			}else{
 				rotateY = easeBoth(now-start,rotateY,drotateY-rotateY,speed);
 				tranflateZ = easeBoth(now-start,tranflateZ,dtranflateZ-tranflateZ,speed);
-				index = Math.ceil((rotateY - rotateY1)/18);
+				index = Math.ceil((rotateY - rotateY1)/15);
 				if(index<20){
 					for(var i=0;i<=index;i++){
 						lis[i].style.visibility = 'visible';
