@@ -107,6 +107,7 @@ ul{list-style:none;}
 	var reszie = function(){
 		if(animateFlage)tranflateZ=dtranflateZ;
 		lvbg.style.transform = 'translate3d(-50%,-50%,0) translate3d('+ this.innerWidth/2 +'px,'+ this.innerHeight/2 +'px,'+tranflateZ+'px) scale3d(1,1,1) rotateY('+rotateY+'deg)';
+		container.style.perspective = this.innerHeight/974*800+'px';
 		dtranflateZ = this.innerHeight/974*400;
 	};
 	window.addEventListener('resize',reszie,false);
