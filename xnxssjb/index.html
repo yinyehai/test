@@ -1,0 +1,208 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title> 虚拟现实 </title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+
+<style type="text/css">
+html,body,div,ul,li{margin:0;padding:0;}
+html,body{width:100%;height:100%;overflow:hidden;}
+ul{list-style:none;}
+
+.container{position:relative;width:100%;height:100%;perspective:800px;}
+.lvbg,.links,.lvbg div,.links li{position:absolute;transform-style:preserve-3d;}
+</style>
+
+</head>
+
+<body> 
+
+<div class="container"></div>
+
+<script>
+(function(){
+
+	//事件类型
+	var mouseDown,mouseMove,mouseUp;
+	if('ontouchstart' in document){
+		mouseDown = 'touchstart';
+		mouseMove = 'touchmove';
+		mouseUp = 'touchend';
+	}else{
+		mouseDown = 'mousedown';
+		mouseMove = 'mousemove';
+		mouseUp = 'mouseup';
+	}
+
+	//选择符别名
+	var $ = function(selector){
+		return document.querySelector(selector);
+	};
+
+	//容器
+	var container = $('.container');
+
+	//生成圆柱
+	var lvbg = document.createElement('ul');
+	var lvbgW = 2580;//背景图片宽
+	var lvbgH = 1170;//背景图片高
+	var lvbgLiNum = 20;//方块个数
+	var lvbgLiW = lvbgW/lvbgLiNum;//方块宽度
+	var lvbgLiDeg = 360/lvbgLiNum;//方块度数
+	var lvbgBj = Math.floor((lvbgLiW-lvbgLiNum/10)*lvbgLiNum/(2*Math.PI));//根据圆柱周长求圆柱半径
+	var lvbgZj = lvbgBj*2;//圆柱直径
+	var pianyiX = lvbgZj/2;//li偏移x,让圆柱块从正前方开始排列
+	var pianyiY = lvbgH/2;//li偏移y,让圆柱块始终在窗口中心
+	var rotateY = -40;//初始rotateY
+	var rotateY1 = rotateY;//记录初始rotateY
+	var drotateY = 300;//目标rotateY
+	var tranflateZ = -3000;//初始tranflateZ
+	var dtranflateZ = 400;//目标tranflateZ
+
+	//圆柱平面宽高
+	lvbg.style.width = lvbgZj + 'px';
+	lvbg.style.height = lvbgH +　'px';
+	lvbg.className = 'lvbg';
+	var lis = [];
+	
+	//排列圆柱块
+	for(var i=0;i<lvbgLiNum;i++){
+		var li = document.createElement('div');
+		li.style.width = lvbgLiW + 'px';
+		li.style.height = lvbgH + 'px';
+		li.style.background = 'url('+ (i+1) +'.png)';
+		if(i>=lvbgLiNum/2-1)li.style.visibility = 'hidden';
+		li.style.backfaceVisibility = 'hidden';
+		li.style.transformOrigin = '50% 50% '+ lvbgBj +'px';
+		li.style.transform = 'translate3d(-50%,-50%,0) translate3d('+ pianyiX +'px,'+ pianyiY +'px,'+ (0-lvbgBj) +'px) rotateY('+ (rotateY-lvbgLiDeg*i) +'deg)';
+		lis.push(li);
+		lvbg.appendChild(li);
+	}
+
+	container.appendChild(lvbg);
+
+	/*
+	初始只显示前两个li
+	一遍旋转一遍显示后面的li
+	这样才有抽出卷轴的感觉
+	如果不这样将永远看到一个半圆柱在旋转
+	*/
+	//改变li显示
+	var changeLi = function(){
+		for(var i=0;i<lvbgLiNum;i++){
+			lis[i].style.visibility = 'visible';
+		}
+	};
+	
+	//改变圆柱样式
+	var reszie = function(){
+		lvbg.style.transform = 'translate3d(-50%,-50%,0) translate3d('+ this.innerWidth/2 +'px,'+ this.innerHeight/2 +'px,'+tranflateZ+'px) scale3d(1,1,1) rotateY('+rotateY+'deg)';
+		dtranflateZ = this.innerHeight/974*400;
+	};
+	window.addEventListener('resize',reszie,false);
+	reszie.call(window);
+	
+
+	//动画公式
+	var easeBoth = function(t, b, c, d){  //加速减速曲线
+		if ((t/=d/2) < 1) {
+			return c/2*t*t + b;
+		}
+		return -c/2 * ((--t)*(t-2) - 1) + b;
+	};
+	
+	//点击开始
+	var startEvent = function(){
+
+		//记录被显示的li当前索引
+		var index = 0;
+		
+		//动画执行时间
+		var speed = 5000;
+
+		//动画开始时间
+		var start = Date.now();
+
+		var run = function(){
+
+			//当前时间
+			var now = Date.now();
+
+			if(Math.round(rotateY*100)/100==drotateY){
+				rotateY = drotateY;
+				tranflateZ = dtranflateZ;
+				reszie.call(window);
+				bindEvent();
+			}else{
+				rotateY = easeBoth(now-start,rotateY,drotateY-rotateY,speed);
+				tranflateZ = easeBoth(now-start,tranflateZ,dtranflateZ-tranflateZ,speed);
+				index = Math.ceil((rotateY - rotateY1)/18);
+				if(index<20){
+					for(var i=0;i<=index;i++){
+						lis[i].style.visibility = 'visible';
+					}
+				}
+				reszie.call(window);
+				setTimeout(run,30);
+			}
+			
+		};
+		run();
+		document.removeEventListener(mouseDown,startEvent,false);
+	};
+	document.addEventListener(mouseDown,startEvent,false);
+	
+
+	//拖拽事件
+	var bindEvent = function(){
+		var isDown = false;
+		var px = 0;
+		var py = 0;
+		
+		document.addEventListener(mouseDown,function(e){
+			isDown = true;
+			var clientX = 0;
+			var clientY = 0;
+			if('clientX' in e){
+				clientX = e.clientX;
+				clientY = e.clientY;
+			}else{
+				clientX = e.touches[0].clientX;
+				clientY = e.touches[0].clientY;
+			}
+			px = clientX;
+			py = clientY;
+		},false);
+		document.addEventListener(mouseMove,function(e){
+			e.preventDefault();
+			var clientX = 0;
+			var clientY = 0;
+			if('clientX' in e){
+				clientX = e.clientX;
+				clientY = e.clientY;
+			}else{
+				clientX = e.touches[0].clientX;
+				clientY = e.touches[0].clientY;
+			}
+			if(isDown){
+				var sx = clientX - px;
+				var sy = clientY - py;
+				rotateY -= sx*0.2;
+				if(rotateY<0)rotateY+=360;
+				if(rotateY>360)rotateY-=360;
+				reszie.call(window);
+				px = clientX;
+				py = clientY;
+			}
+		},false);
+		document.addEventListener(mouseUp,function(){
+			isDown = false;
+		},false);
+	};
+	
+})();
+</script>
+
+</body>
+</html>
