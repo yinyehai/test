@@ -105,6 +105,7 @@ ul{list-style:none;}
 	
 	//改变圆柱样式
 	var reszie = function(){
+		if(animateFlage)tranflateZ=dtranflateZ;
 		lvbg.style.transform = 'translate3d(-50%,-50%,0) translate3d('+ this.innerWidth/2 +'px,'+ this.innerHeight/2 +'px,'+tranflateZ+'px) scale3d(1,1,1) rotateY('+rotateY+'deg)';
 		dtranflateZ = this.innerHeight/974*400;
 	};
@@ -119,6 +120,9 @@ ul{list-style:none;}
 		}
 		return -c/2 * ((--t)*(t-2) - 1) + b;
 	};
+
+	//动画完成标志
+	var animateFlage = false;
 	
 	//点击开始
 	var startEvent = function(){
@@ -138,6 +142,7 @@ ul{list-style:none;}
 			var now = Date.now();
 
 			if(Math.round(rotateY*100)/100==drotateY){
+				animateFlage = true;
 				rotateY = drotateY;
 				tranflateZ = dtranflateZ;
 				reszie.call(window);
