@@ -11,13 +11,16 @@ ul{list-style:none;}
 
 .container{position:relative;width:100%;height:100%;perspective:800px;}
 .lvbg,.links,.lvbg div,.links li{position:absolute;transform-style:preserve-3d;}
+.loading{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);}
 </style>
 
 </head>
 
 <body> 
 
-<div class="container"></div>
+<div class="container">
+<div class="loading">加载中请稍后...</div>
+</div>
 
 <script>
 (function(){
@@ -62,6 +65,7 @@ ul{list-style:none;}
 	//圆柱平面宽高
 	lvbg.style.width = lvbgZj + 'px';
 	lvbg.style.height = lvbgH +　'px';
+	lvbg.style.visibility = 'hidden';
 	lvbg.className = 'lvbg';
 	var lis = [];
 	var imgs = [];
@@ -164,6 +168,8 @@ ul{list-style:none;}
 		img.onload = function(){
 			loadCur++;
 			if(loadCur==loadCount){
+				$('.loading').parentNode.removeChild($('.loading'));
+				lvbg.style.visibility = 'visible';
 				document.addEventListener(mouseDown,startEvent,false);
 			}
 		};
