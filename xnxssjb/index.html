@@ -164,7 +164,7 @@ ul{list-style:none;}
 	//图片加载完就绑定开始事件
 	var loadCount = img.length;
 	var loadCur = 0;
-	for(var i=0;i<imgs.length;i++){
+	for(var i=0;i<loadCount;i++){
 		var img = new Image();
 		img.onload = function(){
 			loadCur++;
