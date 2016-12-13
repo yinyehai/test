@@ -10,7 +10,7 @@ html,body{width:100%;height:100%;overflow:hidden;}
 ul{list-style:none;}
 
 .container{position:relative;width:100%;height:100%;}
-.lvbg,.links,.lvbg div,.links li{position:absolute;transform-style:preserve-3d;}
+.lvbg,.links,.lvbg li,.links li{position:absolute;transform-style:preserve-3d;}
 .loading{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);}
 </style>
 
@@ -75,7 +75,7 @@ ul{list-style:none;}
 	
 	//排列圆柱块
 	for(var i=0;i<lvbgLiNum;i++){
-		var li = document.createElement('div');
+		var li = document.createElement('li');
 		li.style.width = lvbgLiW + 'px';
 		li.style.height = lvbgH + 'px';
 
