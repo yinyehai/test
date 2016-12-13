@@ -158,6 +158,7 @@ ul{list-style:none;}
 		};
 		run();
 		document.removeEventListener(mouseDown,startEvent,false);
+		$('.loading').parentNode.removeChild($('.loading'));
 	};
 
 	//图片加载完就绑定开始事件
@@ -168,7 +169,7 @@ ul{list-style:none;}
 		img.onload = function(){
 			loadCur++;
 			if(loadCur==loadCount){
-				$('.loading').parentNode.removeChild($('.loading'));
+				$('.loading').innerHTML = '点击开始动画';
 				lvbg.style.visibility = 'visible';
 				document.addEventListener(mouseDown,startEvent,false);
 			}
