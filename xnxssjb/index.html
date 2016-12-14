@@ -9,7 +9,7 @@ html,body,div,ul,li{margin:0;padding:0;}
 html,body{width:100%;height:100%;overflow:hidden;}
 ul{list-style:none;}
 
-.container{position:relative;width:100%;height:100%;}
+.container{position:relative;width:100%;height:100%;transform-style:preserve-3d;transform-origin:50% 50% 0;}
 .lvbg,.links,.lvbg li,.links li{position:absolute;transform-style:preserve-3d;}
 .loading{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);}
 </style>
@@ -26,15 +26,21 @@ ul{list-style:none;}
 (function(){
 
 	//事件类型
-	var mouseDown,mouseMove,mouseUp;
+	var mouseDown,mouseMove,mouseUp,getE;
 	if('ontouchstart' in document){
 		mouseDown = 'touchstart';
 		mouseMove = 'touchmove';
 		mouseUp = 'touchend';
+		getE = function(e){
+			return e.touches[0];
+		};
 	}else{
 		mouseDown = 'mousedown';
 		mouseMove = 'mousemove';
 		mouseUp = 'mouseup';
+		getE = function(e){
+			return e;
+		};
 	}
 
 	//选择器别名
@@ -62,8 +68,10 @@ ul{list-style:none;}
 	var rotateY = -40;//初始rotateY
 	var rotateY1 = rotateY;//记录初始rotateY
 	var drotateY = 300;//目标rotateY
+	var rotateX = 0;//初始rotateX
 	var tranflateZ = -3000;//初始tranflateZ
 	var dtranflateZ = 400;//目标tranflateZ
+	var banLiNum = Math.floor(lvbgLiNum/2);//li超出这个索引就隐藏
 
 	//圆柱平面宽高
 	lvbg.style.width = lvbgZj + 'px';
@@ -83,7 +91,7 @@ ul{list-style:none;}
 		imgs.push(img);
 		li.style.background = 'url('+img+')';
 
-		if(i>=lvbgLiNum/2-1)li.style.visibility = 'hidden';
+		if(i>=banLiNum)li.style.visibility = 'hidden';
 		li.style.backfaceVisibility = 'hidden';
 		li.style.transformOrigin = '50% 50% '+ lvbgBj +'px';
 		li.style.transform = 'translate3d(-50%,-50%,0) translate3d('+ pianyiX +'px,'+ pianyiY +'px,'+ (0-lvbgBj) +'px) rotateY('+ (rotateY-lvbgLiDeg*i) +'deg)';
@@ -100,9 +108,10 @@ ul{list-style:none;}
 	如果不这样将永远看到一个半圆柱在旋转
 	*/
 	//改变li显示
-	var changeLi = function(){
-		for(var i=0;i<lvbgLiNum;i++){
-			lis[i].style.visibility = 'visible';
+	var curLi = banLiNum;//当前需要显示的li
+	var changeLi = function(index){
+		for(;curLi<=index&&curLi<lvbgLiNum;curLi++){
+			lis[curLi].style.visibility = 'visible';
 		}
 	};
 	
@@ -113,7 +122,7 @@ ul{list-style:none;}
 		if(animateFlage)tranflateZ=dtranflateZ;
 		lvbg.style.transform = 'translate3d(-50%,-50%,0) translate3d('+ this.innerWidth/2 +'px,'+ this.innerHeight/2 +'px,'+tranflateZ+'px) scale3d(1,1,1) rotateY('+rotateY+'deg)';
 		container.style.perspective = jingshen + 'px';
-		
+		//container.style.transform = 'rotateX('+rotateX+'deg)';
 	};
 	window.addEventListener('resize',reszie,false);
 	reszie.call(window);
@@ -133,9 +142,6 @@ ul{list-style:none;}
 	//点击开始
 	var startEvent = function(){
 
-		//记录被显示的li当前索引
-		var index = 0;
-
 		//动画执行时间
 		var speed = 5000;
 
@@ -151,21 +157,22 @@ ul{list-style:none;}
 				animateFlage = true;
 				rotateY = drotateY;
 				tranflateZ = dtranflateZ;
-				reszie.call(window);
-				bindEvent();
 			}else{
 				rotateY = easeBoth(now-start,rotateY,drotateY-rotateY,speed);
 				tranflateZ = easeBoth(now-start,tranflateZ,dtranflateZ-tranflateZ,speed);
-				index = Math.ceil((rotateY - rotateY1)/15);
-				if(index<20){
-					for(var i=0;i<=index;i++){
-						lis[i].style.visibility = 'visible';
-					}
-				}
-				reszie.call(window);
+			}
+
+			var index = Math.ceil((rotateY - rotateY1)/(lvbgLiDeg/2));
+			changeLi(index);
+
+			reszie.call(window);
+
+			if(animateFlage){
+				bindEvent();
+			}else{
 				setTimeout(run,30);
 			}
-			
+
 		};
 		run();
 		document.removeEventListener(mouseDown,startEvent,false);
@@ -196,38 +203,25 @@ ul{list-style:none;}
 		
 		document.addEventListener(mouseDown,function(e){
 			isDown = true;
-			var clientX = 0;
-			var clientY = 0;
-			if('clientX' in e){
-				clientX = e.clientX;
-				clientY = e.clientY;
-			}else{
-				clientX = e.touches[0].clientX;
-				clientY = e.touches[0].clientY;
-			}
-			px = clientX;
-			py = clientY;
+			var e = getE(e);
+			px = e.clientX;
+			py = e.clientY;
 		},false);
 		document.addEventListener(mouseMove,function(e){
 			e.preventDefault();
-			var clientX = 0;
-			var clientY = 0;
-			if('clientX' in e){
-				clientX = e.clientX;
-				clientY = e.clientY;
-			}else{
-				clientX = e.touches[0].clientX;
-				clientY = e.touches[0].clientY;
-			}
+			var e = getE(e);
 			if(isDown){
-				var sx = clientX - px;
-				var sy = clientY - py;
+				var sx = e.clientX - px;
+				var sy = e.clientY - py;
 				rotateY -= sx*0.2;
+				rotateX += sy*0.2;
 				if(rotateY<0)rotateY+=360;
 				if(rotateY>360)rotateY-=360;
+				if(rotateX>30)rotateX=30;
+				if(rotateX<-30)rotateX=-30;
 				reszie.call(window);
-				px = clientX;
-				py = clientY;
+				px = e.clientX;
+				py = e.clientY;
 			}
 		},false);
 		document.addEventListener(mouseUp,function(){
