@@ -208,9 +208,9 @@ ul{list-style:none;}
 			py = e.clientY;
 		},false);
 		document.addEventListener(mouseMove,function(e){
-			e.preventDefault();
-			var e = getE(e);
 			if(isDown){
+				e.preventDefault();
+				var e = getE(e);
 				var sx = e.clientX - px;
 				var sy = e.clientY - py;
 				rotateY -= sx*0.2;
