@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title> New Document </title>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="jquery.flex-images.css">
+<style type="text/css">
+html,body,div,img{margin:0;padding:0;}
+
+@keyframes lazy_load{
+	0%{opacity:0}
+	100%{opacity:1}
+}
+.flex-images{margin:50px;}
+.flex-images .item{display:none;}
+.flex-images .item img{animation:lazy_load 1s;}
+</style>
+</head>
+
+<body>
+<div class="flex-images">
+    <div class="item"><img src="images/1.jpg"></div>
+    <div class="item"><img src="images/2.jpg"></div>
+    <div class="item"><img src="images/3.jpg"></div>
+    <div class="item"><img src="images/4.jpg"></div>
+    <div class="item"><img src="images/5.jpg"></div>
+    <div class="item"><img src="images/6.jpg"></div>
+    <div class="item"><img src="images/7.jpg"></div>
+    <div class="item"><img src="images/8.jpg"></div>
+    <div class="item"><img src="images/9.jpg"></div>
+    <div class="item"><img src="images/10.jpg"></div>
+    <div class="item"><img src="images/11.jpg"></div>
+    <div class="item"><img src="images/12.jpg"></div>
+    <div class="item"><img src="images/13.jpg"></div>
+    <div class="item"><img src="images/14.jpg"></div>
+    <div class="item"><img src="images/15.jpg"></div>
+</div>
+<script src="jquery-1.11.1.min.js"></script>
+<script src="jquery.flex-images.min.js"></script>
+<script>
+(function(){
+	var container = $('.flex-images');
+	var items = $('.item');
+	var imgs = $('.item img');
+
+	container.empty();
+
+	var urls = [];
+	imgs.each(function(i){
+		urls.push(this.src);
+	});
+	$.each(urls,function(i){
+		var img = new Image();
+		img.onload = function(){
+			items.eq(i).attr('data-w',this.width);
+			items.eq(i).attr('data-h',this.height);
+			container.append(items.eq(i));
+			container.flexImages({
+				rowHeight: 480
+			});
+		};
+		img.src = this;
+	});
+})();
+</script>
+</body>
+</html>

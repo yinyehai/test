@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title> New Document </title>
+<meta charset="utf-8">
+<style type="text/css">
+html,body,div,ul,li{margin:0;padding:0;}
+ul{list-style:none;}
+img{border:none;}
+
+.list:after{content:'';display:block;width:100%;height:0px;clear:both;}
+.list li{width:129px;height:129px;background:#ccc;float:left;margin-right:10px;margin-bottom:10px;overflow:hidden;}
+@keyframes yyh{
+	0%{opacity:0}
+	100%{opacity:1}
+}
+.list li img{animation:yyh 1s;}
+</style>
+</head>
+
+<body>
+
+<ul class="list">
+<li><img src="1.jpg" width="129" height="129"></li>
+<li><img src="2.jpg" width="129" height="129"></li>
+<li><img src="3.jpg" width="129" height="129"></li>
+<li><img src="4.jpg" width="129" height="129"></li>
+<li><img src="5.jpg" width="129" height="129"></li>
+<li><img src="6.jpg" width="129" height="129"></li>
+<li><img src="7.jpg" width="129" height="129"></li>
+<li><img src="8.jpg" width="129" height="129"></li>
+<li><img src="9.jpg" width="129" height="129"></li>
+<li><img src="10.jpg" width="129" height="129"></li>
+<li><img src="11.jpg" width="129" height="129"></li>
+<li><img src="12.jpg" width="129" height="129"></li>
+</ul>
+<ul class="list">
+<li><img src="1.jpg" width="129" height="129"></li>
+<li><img src="2.jpg" width="129" height="129"></li>
+<li><img src="3.jpg" width="129" height="129"></li>
+<li><img src="4.jpg" width="129" height="129"></li>
+<li><img src="5.jpg" width="129" height="129"></li>
+<li><img src="6.jpg" width="129" height="129"></li>
+<li><img src="7.jpg" width="129" height="129"></li>
+<li><img src="8.jpg" width="129" height="129"></li>
+<li><img src="9.jpg" width="129" height="129"></li>
+<li><img src="10.jpg" width="129" height="129"></li>
+<li><img src="11.jpg" width="129" height="129"></li>
+<li><img src="12.jpg" width="129" height="129"></li>
+</ul>
+
+<script>
+var isLoad = false;
+
+var go1 = function(){
+	if(isLoad)return;
+	isLoad = true;
+	var index = 0;
+	var list1 = document.createElement('ul');
+	var list1_lis = [];
+	list1.className = 'list';
+	for(var i=0;i<12;i++){
+		var li = document.createElement('li');
+		list1.appendChild(li);
+		list1_lis.push(li);
+	}
+	document.body.appendChild(list1);
+	var timer = setInterval(function(){
+		var img = new Image();
+		img.src = index + 1 + '.jpg';
+		img.width = 129;
+		img.height = 129;
+		list1_lis[index].appendChild(img);
+
+		/*var li = list1_lis[index].cloneNode();
+		li.appendChild(img.cloneNode());
+		list2.appendChild( li );*/
+
+		index++;
+		if(index==12){
+			clearInterval(timer);
+			isLoad = false;
+		};
+	},400);
+};
+
+var go2 = function(){
+	if(isLoad)return;
+	isLoad = true;
+	var index = 0;
+	var list1 = document.createElement('ul');
+	list1.className = 'list';
+	document.body.appendChild(list1);
+	var timer = setInterval(function(){
+
+		var li = document.createElement('li');
+		var img = new Image();
+		img.src = index + 1 + '.jpg';
+		img.width = 129;
+		img.height = 129;
+		li.appendChild(img);
+		list1.appendChild( li );
+
+		index++;
+		if(index==12){
+			clearInterval(timer);
+			isLoad = false;
+		};
+	},400);
+};
+
+var timer = null;
+document.onmousewheel = function(){
+	clearTimeout(timer);
+	timer = setTimeout(function(){
+		if(document.body.scrollTop + document.documentElement.scrollTop >=  document.body.offsetHeight - document.documentElement.clientHeight){
+			go2();
+		}
+	},100);
+};
+</script>
+</body>
+</html>
