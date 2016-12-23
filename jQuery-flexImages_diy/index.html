@@ -45,11 +45,7 @@ html,body,div,img{margin:0;padding:0;}
 
 	container.empty();
 
-	var urls = [];
 	imgs.each(function(i){
-		urls.push(this.src);
-	});
-	$.each(urls,function(i){
 		var img = new Image();
 		img.onload = function(){
 			items.eq(i).attr('data-w',this.width);
@@ -59,7 +55,7 @@ html,body,div,img{margin:0;padding:0;}
 				rowHeight: 480
 			});
 		};
-		img.src = this;
+		img.src = this.src;
 	});
 })();
 </script>
