@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title> New Document </title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+<link rel="stylesheet" type="text/css" href="css/css.css">
+</head>
+
+<body>
+
+<div class="header">
+<img src="images/logo.png" class="logo">
+</div>
+
+<div class="menu">
+<a href="###" class="link">要闻</a><a href="###" class="link">要闻</a><a href="###" class="link">要闻</a><a href="###" class="link">要闻</a><a href="###" class="link">要闻</a><a href="###" class="cur link">要闻</a><a href="###" class="link">要闻</a><a href="###" class="link">要闻</a><a href="###" class="link">要闻</a><a href="###" class="link">要闻</a>
+</div>
+
+<ul class="news_list">
+<li class="refresh">刷新</li>
+<li>
+<a href="###">
+<img src="images/pic01.jpg" class="img">
+<h3>阿斯：桑保利将在5月22日入主阿根廷</h3>
+<p>2017-02-06</p>
+</a>
+</li>
+<li>
+<a href="###">
+<img src="images/pic01.jpg" class="img">
+<h3>阿斯：桑保利将在5月22日入主阿根廷</h3>
+<p>2017-02-06</p>
+</a>
+</li>
+<li>
+<a href="###">
+<img src="images/pic01.jpg" class="img">
+<h3>阿斯：桑保利将在5月22日入主阿根廷</h3>
+<p>2017-02-06</p>
+</a>
+</li>
+<li>
+<a href="###">
+<img src="images/pic01.jpg" class="img">
+<h3>阿斯：桑保利将在5月22日入主阿根廷</h3>
+<p>2017-02-06</p>
+</a>
+</li>
+<li>
+<a href="###">
+<img src="images/pic01.jpg" class="img">
+<h3>阿斯：桑保利将在5月22日入主阿根廷</h3>
+<p>2017-02-06</p>
+</a>
+</li>
+<li>
+<a href="###">
+<img src="images/pic01.jpg" class="img">
+<h3>阿斯：桑保利将在5月22日入主阿根廷</h3>
+<p>2017-02-06</p>
+</a>
+</li>
+<li class="wenzi">
+<a href="###">
+<h3>阿斯：桑保利将在5月22日入主阿根廷</h3>
+<p>2017-02-06</p>
+</a>
+</li>
+<li>
+<a href="###">
+<img src="images/pic01.jpg" class="img">
+<h3>阿斯：桑保利将在5月22日入主阿根廷</h3>
+<p>2017-02-06</p>
+</a>
+</li>
+<li class="loadmore">加载中...</li>
+</ul>
+
+<div class="pages"></div>
+
+<script>
+	//菜单
+	var menu = document.querySelector('.menu');
+	var curA = document.querySelector('.menu .cur');
+	var offsetLeft = menu.offsetWidth/2-curA.offsetWidth/2;
+	var shiji = curA.offsetLeft - menu.offsetLeft;
+	menu.scrollLeft = shiji-offsetLeft;
+
+	//新闻列表
+	var news_list = document.querySelector('.news_list');
+	var loadMore = document.querySelector('.loadmore');
+	news_list.addEventListener('scroll',function(){
+		if(this.scrollTop>=this.scrollHeight-this.offsetHeight){
+			//loadMore.innerText = '加载中...';
+			console.log('翻页');
+		}
+	},false);
+
+	//刷新
+	var refresh = document.querySelector('.refresh');
+	var timeout = null;
+	var touchY = 0;
+	news_list.addEventListener('touchstart',function(e){
+		clearTimeout(timeout);
+		//if(news_list.scrollTop>0){touchStart = 0;return;}
+		touchY = e.touches[0].clientY;
+		refresh.style.transition = '0s';
+		scrollStop = news_list.scrollTop;
+	},false);
+	news_list.addEventListener('touchmove',function(e){
+		var touch = e.touches[0];
+
+		var byY = touch.clientY - touchY;
+		touchY = touch.clientY;
+
+		if(news_list.scrollTop>0){
+			return ;
+		}
+		if(byY > 0){
+			refresh.style.height = refresh.style.lineHeight = refresh.offsetHeight + byY * 0.2 + 'px';
+		}else{
+			refresh.style.height = refresh.style.lineHeight = refresh.offsetHeight + byY  + 'px';
+		}
+		if(refresh.offsetHeight>0){
+			e.preventDefault();
+		}
+		if(refresh.offsetHeight>20){
+			refresh.innerText = '放手刷新';
+		}else{
+			refresh.innerText = '刷新';
+		}
+	},false);
+	news_list.addEventListener('touchend',function(e){
+		if(refresh.offsetHeight==0)return;
+		if(refresh.offsetHeight<20){
+			refresh.style.transition = '.3s';
+			refresh.style.height = refresh.style.lineHeight = '0px';
+			return;
+		}
+		refresh.style.transition = '.3s';
+		refresh.style.height = refresh.style.lineHeight = '20px';
+		refresh.innerText = '刷新中...';
+		timeout = setTimeout(function(){
+			console.log('刷新');
+			success();
+		},300);
+		isMove = false;
+	},false);
+
+	function success(){
+		timeout = setTimeout(function(){
+			refresh.style.height = refresh.style.lineHeight = '0px';
+			refresh.style.transition = '0s';
+			refresh.innerText = '刷新';
+		},1000);
+	}
+</script>
+</body>
+</html>
