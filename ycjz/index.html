@@ -80,8 +80,9 @@ var go1 = function(){
 		if(index==12){
 			clearInterval(timer);
 			isLoad = false;
+			document.onscroll();
 		};
-	},400);
+	},100);
 };
 
 var go2 = function(){
@@ -105,16 +106,17 @@ var go2 = function(){
 		if(index==12){
 			clearInterval(timer);
 			isLoad = false;
+			document.onscroll();
 		};
-	},400);
+	},100);
 };
 
 var timer = null;
-document.onmousewheel = function(){
+document.onscroll = function(){
 	clearTimeout(timer);
 	timer = setTimeout(function(){
 		if(document.body.scrollTop + document.documentElement.scrollTop >=  document.body.offsetHeight - document.documentElement.clientHeight){
-			go2();
+			go1();
 		}
 	},100);
 };
