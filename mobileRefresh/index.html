@@ -77,8 +77,6 @@
 <li class="loadmore">加载中...</li>
 </ul>
 
-<div class="pages"></div>
-
 <script>
 	//菜单
 	var menu = document.querySelector('.menu');
@@ -103,10 +101,8 @@
 	var touchY = 0;
 	news_list.addEventListener('touchstart',function(e){
 		clearTimeout(timeout);
-		//if(news_list.scrollTop>0){touchStart = 0;return;}
 		touchY = e.touches[0].clientY;
 		refresh.style.transition = '0s';
-		scrollStop = news_list.scrollTop;
 	},false);
 	news_list.addEventListener('touchmove',function(e){
 		var touch = e.touches[0];
@@ -117,14 +113,17 @@
 		if(news_list.scrollTop>0){
 			return ;
 		}
+
 		if(byY > 0){
 			refresh.style.height = refresh.style.lineHeight = refresh.offsetHeight + byY * 0.2 + 'px';
 		}else{
 			refresh.style.height = refresh.style.lineHeight = refresh.offsetHeight + byY  + 'px';
 		}
+
 		if(refresh.offsetHeight>0){
 			e.preventDefault();
 		}
+
 		if(refresh.offsetHeight>20){
 			refresh.innerText = '放手刷新';
 		}else{
@@ -133,11 +132,13 @@
 	},false);
 	news_list.addEventListener('touchend',function(e){
 		if(refresh.offsetHeight==0)return;
+
 		if(refresh.offsetHeight<20){
 			refresh.style.transition = '.3s';
 			refresh.style.height = refresh.style.lineHeight = '0px';
 			return;
 		}
+
 		refresh.style.transition = '.3s';
 		refresh.style.height = refresh.style.lineHeight = '20px';
 		refresh.innerText = '刷新中...';
@@ -145,7 +146,6 @@
 			console.log('刷新');
 			success();
 		},300);
-		isMove = false;
 	},false);
 
 	function success(){
