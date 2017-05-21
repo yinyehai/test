@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title> webApp下拉刷新 </title>
+<title> 移动端下拉刷新 </title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
 <link rel="stylesheet" type="text/css" href="css/css.css">
@@ -97,15 +97,16 @@
 
 	//刷新
 	var refresh = document.querySelector('.refresh');
+	refresh.height = refresh.offsetHeight;
 	var timeout = null;
 	var touchY = 0;
 	news_list.addEventListener('touchstart',function(e){
 		clearTimeout(timeout);
-		touchY = e.touches[0].clientY;
+		touchY = e.changedTouches[0].clientY;
 		refresh.style.transition = '0s';
 	},false);
 	news_list.addEventListener('touchmove',function(e){
-		var touch = e.touches[0];
+		var touch = e.changedTouches[0];
 
 		var byY = touch.clientY - touchY;
 		touchY = touch.clientY;
@@ -115,32 +116,35 @@
 		}
 
 		if(byY > 0){
-			refresh.style.height = refresh.style.lineHeight = refresh.offsetHeight + byY * 0.2 + 'px';
+			refresh.height = refresh.height + byY * 0.2;
 		}else{
-			refresh.style.height = refresh.style.lineHeight = refresh.offsetHeight + byY  + 'px';
+			refresh.height = refresh.height + byY;
 		}
+		refresh.style.height = refresh.style.lineHeight = refresh.height  + 'px';
 
-		if(refresh.offsetHeight>0){
+		if(refresh.height>0){
 			e.preventDefault();
 		}
 
-		if(refresh.offsetHeight>20){
+		if(refresh.height>20){
 			refresh.innerText = '放手刷新';
 		}else{
 			refresh.innerText = '刷新';
 		}
 	},false);
 	news_list.addEventListener('touchend',function(e){
-		if(refresh.offsetHeight==0)return;
+		if(refresh.height<=0)return;
 
-		if(refresh.offsetHeight<20){
+		if(refresh.height<20){
 			refresh.style.transition = '.3s';
 			refresh.style.height = refresh.style.lineHeight = '0px';
+			refresh.height = 0;
 			return;
 		}
 
 		refresh.style.transition = '.3s';
 		refresh.style.height = refresh.style.lineHeight = '20px';
+		refresh.height = 20;
 		refresh.innerText = '刷新中...';
 		timeout = setTimeout(function(){
 			console.log('刷新');
@@ -151,6 +155,7 @@
 	function success(){
 		timeout = setTimeout(function(){
 			refresh.style.height = refresh.style.lineHeight = '0px';
+			refresh.height = 0;
 			refresh.style.transition = '0s';
 			refresh.innerText = '刷新';
 		},1000);
