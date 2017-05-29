@@ -10,6 +10,7 @@
 <body>
 
 <div class="header">
+<img src="images/logo.png" class="logo">
 </div>
 
 <div class="menu">
@@ -17,7 +18,7 @@
 </div>
 
 <ul class="news_list">
-<li class="refresh">刷新</li>
+<li class="refresh">下拉刷新</li>
 <li>
 <a href="###">
 <img src="images/pic01.jpg" class="img">
@@ -115,7 +116,7 @@
 		}
 
 		if(byY > 0){
-			refresh.height = refresh.height + byY * 0.2;
+			refresh.height = refresh.height + byY * 0.5;
 		}else{
 			refresh.height = refresh.height + byY;
 		}
@@ -128,7 +129,7 @@
 		if(refresh.height>20){
 			refresh.innerText = '放手刷新';
 		}else{
-			refresh.innerText = '刷新';
+			refresh.innerText = '下拉刷新';
 		}
 	},false);
 	news_list.addEventListener('touchend',function(e){
