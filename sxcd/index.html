@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title> New Document </title>
+<meta charset="utf-8">
+<style type="text/css">
+html,body{width:100%;height:100%;overflow:hidden;}
+html,body,div,h2,p{margin:0;padding:0;}
+.boxs{position:absolute;top:50%;transform:translateY(-50%);}
+
+.box{width:100px;height:63px;margin-left:50px;margin-top:50px;position:relative;}
+.box:nth-of-type(1){margin-top:0px;}
+.box_title{height:30px;line-height:30px;color:#fff;text-align:center;background:#386cb1;border-top-left-radius:5px;border-top-right-radius:5px;border:1px #a7d7ef solid;}
+.box_jian,.box_jia{float:right;cursor:pointer;font-style:normal;margin-right:5px;-webkit-user-drag:none;-webkit-user-select:none;-ms-user-select:none;-moz-user-select:-moz-none;}
+
+.box_con{text-align:center;line-height:30px;border-bottom-left-radius:5px;border-bottom-right-radius:5px;border:1px #a7d7ef solid;border-top:0px;}
+.box_child{width:150px;position:absolute;left:150px;top:50%;transform:translateY(-50%);}
+.hengline{display:block;width:50px;height:1px;background:#a7d7ef;position:absolute;left:-50px;top:50%;transform:translateY(-50%);}
+.nextline{display:block;width:50px;height:1px;background:#a7d7ef;position:absolute;left:-50px;top:50%;transform:translateY(-50%);}
+.prevline{display:block;width:50px;height:1px;background:#a7d7ef;position:absolute;left:-50px;top:50%;transform:translateY(-50%);}
+.shuline{width:1px;background:#a7d7ef;position:absolute;left:0px;top:32px;bottom:32px;}
+</style>
+</head>
+
+<body>
+
+<button id="tianjia">添加节点</button>
+
+<div class="boxs"></div>
+
+<script src="jquery-1.8.2.min.js"></script>
+<script>
+	/*
+	<div class="box">
+	<b class="hengline"></b>
+	<div class="box_title"><i class="box_jian">-</i>施工员</div>
+	<div class="box_con"><i class="box_jia">+</i>尹斗俊</div>
+	<div class="box_child">
+
+	</div>
+	</div>
+	*/
+	var html = '<div class="box"><b class="hengline"></b><div class="box_title"><i class="box_jian">-</i>施工员</div><div class="box_con"><i class="box_jia">+</i>尹斗俊</div><div class="box_child"></div></div>';
+	var hengline = '<b class="hengline"></b>';
+	var shuline = '<b class="shuline"></b>';
+	$('#tianjia').click(function(){
+		$('.boxs').append($(html));
+	});
+	$('.box').live('click',function(e){
+		if(e.target.className == 'box_jia'){
+			var child = $(this).find('.box_child').eq(0);
+			child.append($(html));
+
+			var count = child.data('count')||0;
+			if(count==0){
+				child.append($(hengline));
+			}else if(count==1){
+				child.append($(shuline));
+			}
+			count++;
+			child.data('count',count);
+		}else if(e.target.className == 'box_jian'){
+			var child = $(this).parent('.box_child').eq(0);
+			var count = child.data('count') || 0;
+			count--;
+			child.data('count',count);
+			if(count==1){
+				child.find('.shuline').remove();
+			}else if(count==0){
+				child.find('.hengline').remove();
+			}
+			$(this).remove();
+		}
+		e.stopPropagation();
+	});
+</script>
+</body>
+</html>
